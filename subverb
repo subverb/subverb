@@ -1,0 +1,41 @@
+#!/bin/bash
+
+SVBASE=$(basename $0)
+SVBASEUC=$(echo $SVBASE | tr a-z A-Z)
+SVCMD=$1
+shift
+SVCMD=${SVCMD:-"help"}
+
+evaldir() {
+	NAME=$1
+	DEFAULT=$2
+	SUFFIX=$3
+	eval CONFIGVAR="\$${SVBASEUC}_${NAME}"
+	eval SVCONFIGVAR="\$SV_${NAME}"
+	if [ -n "$CONFIGVAR" ]; then
+		VALUE="$CONFIGVAR"
+	elif [ -n "$SVCONFIGVAR" ]; then
+		VALUE="$SVCONFIGVAR/$SUFFIX"
+	else
+		VALUE="$DEFAULT/$SUFFIX"
+	fi
+	echo ${SVBASEDIR}${VALUE}
+
+}
+
+SVCONF=$(evaldir CONFIG_DIR /etc ${SVBASE})
+SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
+
+test -f $SVCONF && . $SVCONF
+
+if [ -x "${SVEXEC}/${SVBASE}-${SVCMD}" ]; then
+	exec "${SVEXEC}/${SVBASE}-${SVCMD}" $*
+elif [ -x "${SVEXEC}/${SVCMD}" ]; then
+	exec "${SVEXEC}/${SVCMD}" $*
+else
+	cat 1>&2 <<ERR
+subcommand ${SVCMD} isn't known.
+Try '${SVBASE} help' for a list of allowed commands
+ERR
+	exit 1
+fi

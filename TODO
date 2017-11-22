@@ -1,0 +1,19 @@
+== execution of sub-command ==
+	[ ] sourcing of .sh commands
+	[X] exec of other executables
+
+== configuration ==
+	[X] read config files
+	[ ] read directory of config files
+	[ ] global command-line parameter parsing
+
+== library ==
+	[ ] pre-sourcing of library functions
+	[ ] auto-help
+
+== tools ==
+	[ ] bash completion
+
+== build ==
+	[ ] documentaion
+	[ ] tests
