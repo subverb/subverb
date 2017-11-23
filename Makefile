@@ -11,7 +11,7 @@ PROGRAMS=subverb
 
 all:
 
-check:
+check: $(patsubst t/%.tmk,check-%,$(wildcard t/*.tmk))
 
 install: $(addprefix install-exec-,$(PROGRAMS))
 
@@ -21,4 +21,7 @@ install-exec-%: install-dirs
 install-dirs:
 	$(INSTALL) -m $(DIRMODE) -d $(BINDIR)
 
-.PHONY: all check install install-exec-%
+check-%:
+	$(MAKE) -C t -f $(@:check-%=%.tmk) TOPDIR=.. check
+
+.PHONY: all check install install-exec-% install-dirs check-%
