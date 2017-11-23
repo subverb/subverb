@@ -1,0 +1,14 @@
+COMMAND=run_simpleconf
+SUBVERB=test
+
+define DESCRIPTION
+just start the subverb ${SUBVERB} of ${COMMAND}, reading a configuration-file
+endef
+
+define OUTPUT
+read conffile 1
+test2
+OK
+endef
+
+include common.mk
