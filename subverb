@@ -23,7 +23,7 @@ evaldir() {
 
 }
 
-SVCONF=$(evaldir CONFIG_DIR /etc ${SVBASE})
+SVCONF=$(evaldir CONFIG_FILE /etc ${SVBASE})
 SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 
 test -f $SVCONF && . $SVCONF
