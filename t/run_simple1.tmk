@@ -1,0 +1,13 @@
+COMMAND=run_simple1
+SUBVERB=test
+
+define DESCRIPTION
+just start the subverb ${SUBVERB} of ${COMMAND}
+endef
+
+define OUTPUT
+test1
+OK
+endef
+
+include common.mk

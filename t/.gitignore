@@ -1,2 +1,5 @@
 .*.res
 .*.ref
+
+# tests
+/run_simple1
