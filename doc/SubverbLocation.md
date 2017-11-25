@@ -22,7 +22,14 @@ named subverb should exist. Within this directory a file named
 be used instead.
 
 So for a command `foo` the subverb `bar` should be accessable within
-`/usr/lib/foo/subverb/foo-bar` or `/usr/lib/foo/subverb/bar`.
+`/usr/lib/foo/subverb/foo-bar.sh`, `/usr/lib/foo/subverb/foo-bar`,
+`/usr/lib/foo/subverb/bar.sh` or `/usr/lib/foo/subverb/bar`. 
+If multiple of those files exist, the first one found will be
+used.
+
+If the file found ends with a .sh-suffix, it will be sourced
+instead of executed directly, which gives an performance improvement
+and allows an easier handling of (shell-)library functions.
 
 ## wrapper binary ##
 

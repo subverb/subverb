@@ -31,15 +31,35 @@ evaldir() {
 
 }
 
+isExecutable() {
+	for i in "$@"; do
+		[ -x "$i" -o -f "$i.sh" ] && return 0
+	done
+	return 1
+}
+
+call() {
+	for i in "$@"; do
+		if [ -f "$i.sh" ]; then
+			set -- "${EXARGV[@]}"
+			. "$i.sh"
+			return $?
+		elif [ -x "$i" ]; then
+			exec "$i" "${EXARGV[@]}"
+			return $?
+		fi
+	done
+	return 1
+}
+
 SVCONF=$(evaldir CONFIG_FILE /etc ${SVBASE})
 SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 
 test -f $SVCONF && . $SVCONF
 
-if [ -x "${SVEXEC}/${SVBASE}-${SVCMD}" ]; then
-	exec "${SVEXEC}/${SVBASE}-${SVCMD}" $*
-elif [ -x "${SVEXEC}/${SVCMD}" ]; then
-	exec "${SVEXEC}/${SVCMD}" $*
+declare -a EXARGV=("$@")
+if isExecutable "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
+	call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"
 else
 	cat 1>&2 <<ERR
 subcommand ${SVCMD} isn't known.

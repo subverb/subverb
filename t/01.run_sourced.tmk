@@ -1,0 +1,14 @@
+COMMAND=01.run_sourced
+SUBVERB=test
+
+define DESCRIPTION
+just start the subverb ${SUBVERB} of ${COMMAND}
+${SUBVERB} should be sourced and not forked
+endef
+
+define OUTPUT
+./01.run_sourced
+OK
+endef
+
+include common.mk
