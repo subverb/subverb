@@ -1,0 +1,13 @@
+COMMAND=03.app_conf_var
+SUBVERB=test
+
+define DESCRIPTION
+test, wether <APP>_CONFIG_FILE is taken into account
+endef
+
+define OUTPUT
+read app conffile
+OK
+endef
+
+include common.mk
