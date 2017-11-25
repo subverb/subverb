@@ -1,0 +1,12 @@
+COMMAND=03.sv_exec_var
+SUBVERB=test
+
+define DESCRIPTION
+test, wether SV_SUBCMD_DIR is taken into account
+endef
+
+define OUTPUT
+seperate execdir
+endef
+
+include common.mk
