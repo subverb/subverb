@@ -6,7 +6,7 @@ just start the subverb ${SUBVERB} of ${COMMAND}
 endef
 
 define OUTPUT
-test1
+${CURDIR}/usr/lib/run_simple1/subverb/${SUBVERB}
 OK
 endef
 
