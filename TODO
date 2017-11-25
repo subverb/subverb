@@ -1,15 +1,15 @@
 == execution of sub-command ==
-	[ ] sourcing of .sh commands
+	[X] sourcing of .sh commands
 	[X] exec of other executables
 
 == configuration ==
 	[X] read config files
-	[ ] read directory of config files
+	[X] read directory of config files
 	[X] provide application/system/user configuration
 	[ ] global command-line parameter parsing
 
 == library ==
-	[ ] pre-sourcing of library functions
+	[X] pre-sourcing of library functions
 	[ ] auto-help
 
 == tools ==
