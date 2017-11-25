@@ -1,0 +1,17 @@
+COMMAND=02.directoryconf
+SUBVERB=test
+
+define DESCRIPTION
+read sonfiguration file and directory
+
+This has to ignore files without .conf suffix in the directory.
+endef
+
+define OUTPUT
+file conf
+01
+03
+OK
+endef
+
+include common.mk

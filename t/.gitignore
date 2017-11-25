@@ -4,6 +4,7 @@
 # tests
 /??.run_simple1
 /??.run_simpleconf
+/??.directoryconf
 /??.run_sourced
 /??.sv_conf_var
 /??.sv_exec_var

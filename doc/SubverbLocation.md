@@ -6,12 +6,9 @@ can be looked up in [[Variables]].
 
 ## Configuration file ##
 
-Each application can have a system-wide configuration file. This will
-be searched in the `$SV_CONFIG_DIR` (usually /etc) under the name of the
-command.
-
-This file is expected to be a shell-fragment - which is used to set
-environment variables.
+Configuration files are expected to be shell-fragments - used to set
+environment variables. But they can be used for other purposes as well.
+See [[Configuration]] for more inforamtion.
 
 ## subverb binary ##
 

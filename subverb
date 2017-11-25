@@ -51,10 +51,22 @@ call() {
 	return 1
 }
 
+parse_config() {
+	for i in "$@"; do
+		if [ -f "$i" ]; then
+			. $i
+		fi
+		if [ -d "$i" -o -d "$i.d" ]; then
+			dir=$([ -d "$i.d" ] && echo "$i.d" || echo "$i")
+			for f in $dir/*.conf; do
+				. $f
+			done
+		fi
+	done
+}
+
 SVCONF=$(evaldir CONFIG_FILE /etc ${SVBASE})
 SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
-
-test -f $SVCONF && . $SVCONF
 
 declare -a EXARGV=("$@")
 if call "${SVEXEC}-pre"; then
@@ -63,6 +75,8 @@ if call "${SVEXEC}-pre"; then
 		exit $RVAL
 	fi
 fi
+
+parse_config "$SVCONF"
 
 if ! call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
 	cat 1>&2 <<ERR
