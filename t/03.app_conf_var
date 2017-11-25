@@ -1,4 +1,4 @@
 #!/bin/bash
 
-APP_CONF_VAR_CONFIG_FILE=/etc/appbase
+APP_CONF_VAR_SYSCONFIG=/etc/appbase
 . ../subverb

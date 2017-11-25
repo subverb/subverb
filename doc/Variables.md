@@ -12,14 +12,14 @@ will be `foobar`.
 
 ## directory/file-lookup ##
 
-### `$<APP>_CONFIG_FILE` ###
+### `$<APP>_SYSCONFIG` ###
 
 This variable, if set, will contain the name of the configuration-file,
 which is read and should contain system-wide configuration.
 If that file isn't present, it will be ignored.
 
 The default is constructed by adding `<app>` to the content of
-`$SV_CONFIG_FILE`.
+`$SV_SYSCONFIG`.
 
 ### `$<APP>_SUBCMD_DIR` ###
 
@@ -29,7 +29,7 @@ are searched in.
 The default is constructed by using the value of `$SV_SUBCMD_DIR` and adding
 the `<app>/subverb`.
 
-### `$SV_CONFIG_FILE` ###
+### `$SV_SYSCONFIG` ###
 
 This variable should contain the directory, where systemwide configuration
 files for the applications can be found in. The default is `/etc`.

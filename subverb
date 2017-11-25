@@ -65,7 +65,7 @@ parse_config() {
 	done
 }
 
-SVCONF=$(evaldir CONFIG_FILE /etc ${SVBASE})
+SVCONF=$(evaldir SYSCONFIG /etc ${SVBASE})
 SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 
 declare -a EXARGV=("$@")

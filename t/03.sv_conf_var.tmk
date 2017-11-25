@@ -1,9 +1,9 @@
 COMMAND=03.sv_conf_var
 SUBVERB=test
-export SV_CONFIG_FILE=/etc/svbase
+export SV_SYSCONFIG=/etc/svbase
 
 define DESCRIPTION
-test, wether SV_CONFIG_FILE is taken into account
+test, wether SV_SYSCONFIG is taken into account
 endef
 
 define OUTPUT
