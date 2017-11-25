@@ -1,4 +1,4 @@
-= Testing =
+# Testing #
 
 Most features are tested using a make-based testing framework.
 To add a new test, the following steps should be followed:
@@ -10,7 +10,7 @@ To add a new test, the following steps should be followed:
 The test will be found and executed automatically during `make check`.
 Alternatively it can be executed explicit using `make check-TESTNAME`.
 
-== Test description file ==
+## Test description file ##
 
 The test-description is parsed as a Makefile, so all constructs valid
 for GNU make, can be used.

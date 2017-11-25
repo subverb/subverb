@@ -1,4 +1,4 @@
-= Deployment of a subverb application =
+# Deployment of a subverb application #
 
 If subverb itself is installed, the easiest way to create a seperate
 application is to provide a symlink of using the applications name.
@@ -6,7 +6,7 @@ application is to provide a symlink of using the applications name.
 	ln -s /usr/bin/subverb /usr/bin/myapplication
 
 The supported subverbs should then be placed, according to
-[[Variables]] and/or [[SubverbDeployment]]. Usually as seperate
+[[Variables]] and/or [[SubverbLocation]]. Usually as seperate
 binaries within `/usr/lib/myapplication/subverb`.
 
 If things get more complicated, or a specific variables-setup is needed,
