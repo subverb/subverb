@@ -28,6 +28,7 @@ check-%:
 
 clean: TESTBASE=$(addprefix t/., $(TESTS))
 clean:
-	rm -f $(addprefix t/, $(TESTS)) $(addsuffix .res, $(TESTBASE)) $(addsuffix .ref, $(TESTBASE))
+	for i in $(TESTS); do test -L t/$$i && rm t/$$i; done; true
+	rm -f $(addsuffix .res, $(TESTBASE)) $(addsuffix .ref, $(TESTBASE))
 
 .PHONY: all check install install-exec-% install-dirs check-%

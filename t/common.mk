@@ -13,7 +13,7 @@ banner:
 	@echo ========================================
 
 $(COMMAND): $(TOPDIR)/subverb
-	$(LN_SF) $< $@
+	test -f $@ || $(LN_SF) $< $@
 
 .$(COMMAND).res: banner $(COMMAND) $(COMMAND).tmk common.mk
 	./$(COMMAND) $(SUBVERB) $(ARGUMENTS) | tee .$(COMMAND).res
