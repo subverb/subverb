@@ -1,0 +1,16 @@
+COMMAND=05.argument
+SUBVERB=test
+ARGUMENTS=foo bar "foo bar"
+
+define DESCRIPTION
+test argument passing for executed subverbs
+endef
+
+define OUTPUT
+foo
+bar
+foo bar
+OK
+endef
+
+include common.mk
