@@ -1,0 +1,12 @@
+COMMAND=03.app_exec_var
+SUBVERB=test
+
+define DESCRIPTION
+test, wether APP_SUBCMD_DIR is taken into account
+endef
+
+define OUTPUT
+app-exec dir OK
+endef
+
+include common.mk

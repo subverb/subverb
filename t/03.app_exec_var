@@ -1,0 +1,2 @@
+APP_EXEC_VAR_SUBCMD_DIR=/usr/share/app_exec
+. ../subverb
