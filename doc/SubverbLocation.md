@@ -31,6 +31,29 @@ If the file found ends with a .sh-suffix, it will be sourced
 instead of executed directly, which gives an performance improvement
 and allows an easier handling of (shell-)library functions.
 
+## common library handling ##
+
+Before the subverb is executed, a common library file is sourced
+and executedi, if it exists. This can be used to prepare the environment,
+test some common conditions (which must met for _all_ subverbs) and
+for sourced subverbs provide some common library functions.
+
+Similar, there is a library file, which is called after the
+subverb has finished. Be aware, that if the subverb is sourced
+and calls `exit()`, this tear-down library will be ignored.
+
+The name of those libraries is computed similar to the subverb
+binaries. But instead of looking inside of the `subverb` directory,
+a `subverb-pre.sh` or `subverb-pre` resp. a `subverb-post.sh` or
+`subverb-post` file is searched. Only the `.sh` variants
+are sourced (and provide library functions).
+
+So for a command `foo` by default the file `/usr/lib/foo/subverb-pre`
+(with or without a .sh-suffix) will be executed before the subverb.
+If the preparation library has a return value indicating a failure
+(not zero), the subverb-execution will not take place. This makes
+it possible to deny exection, if a major problem occurs.
+
 ## wrapper binary ##
 
 to modify further aspects of the system, it is also possible

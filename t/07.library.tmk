@@ -1,0 +1,15 @@
+COMMAND=07.library
+SUBVERB=test
+
+define DESCRIPTION
+call tear-up/down library fragments, if they exist
+endef
+
+define OUTPUT
+preparation
+subverb
+OK
+finalization
+endef
+
+include common.mk

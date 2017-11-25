@@ -57,6 +57,13 @@ SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 test -f $SVCONF && . $SVCONF
 
 declare -a EXARGV=("$@")
+if call "${SVEXEC}-pre"; then
+	if [ $RVAL -ne 0 ]; then
+		echo "$0: command preparation failed"
+		exit $RVAL
+	fi
+fi
+
 if ! call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
 	cat 1>&2 <<ERR
 subcommand ${SVCMD} isn't known.
@@ -64,3 +71,8 @@ Try '${SVBASE} help' for a list of allowed commands
 ERR
 	exit 1
 fi
+
+RET=$RVAL
+call "${SVEXEC}-post"
+
+exit $RET
