@@ -1,7 +1,6 @@
 export OUTPUT
 export DESCRIPTION
-export SV_CONFIG_DIR=etc
-export SV_SUBCMD_DIR=usr/lib/
+export SVBASEDIR=.
 
 LN_SF?=ln -sf
 
