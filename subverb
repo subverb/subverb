@@ -31,22 +31,21 @@ evaldir() {
 
 }
 
-isExecutable() {
-	for i in "$@"; do
-		[ -x "$i" -o -f "$i.sh" ] && return 0
-	done
-	return 1
-}
-
+# call an external application
+# cmdline-arguments are passed via EXARGV
+# applications return-value is given via RVAL
+# return true, when the command was found
 call() {
 	for i in "$@"; do
 		if [ -f "$i.sh" ]; then
 			set -- "${EXARGV[@]}"
 			. "$i.sh"
-			return $?
+			export RVAL=$?
+			return 0
 		elif [ -x "$i" ]; then
 			exec "$i" "${EXARGV[@]}"
-			return $?
+			export RVAL=$?
+			return 0
 		fi
 	done
 	return 1
@@ -58,9 +57,7 @@ SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 test -f $SVCONF && . $SVCONF
 
 declare -a EXARGV=("$@")
-if isExecutable "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
-	call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"
-else
+if ! call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
 	cat 1>&2 <<ERR
 subcommand ${SVCMD} isn't known.
 Try '${SVBASE} help' for a list of allowed commands
