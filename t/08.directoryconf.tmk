@@ -1,0 +1,22 @@
+COMMAND=08.directoryconf
+SUBVERB=testorder
+export HOME=home
+
+define DESCRIPTION
+check ordering of application/system/user configuration
+endef
+
+define OUTPUT
+file conf
+01
+03
+app=app
+appsys=sys
+sys=sys
+appsysuser=user
+sysuser=user
+user=user
+user2=found
+endef
+
+include common.mk

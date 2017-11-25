@@ -65,7 +65,7 @@ parse_config() {
 	done
 }
 
-SVCONF=$(evaldir SYSCONFIG /etc ${SVBASE})
+SVSHAREDDIR=$(evaldir SHARED_DIR /usr/share ${SVBASE})
 SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 
 declare -a EXARGV=("$@")
@@ -76,7 +76,15 @@ if call "${SVEXEC}-pre"; then
 	fi
 fi
 
-parse_config "$SVCONF"
+declare CONFIGNAME
+eval CONFIGNAME="\$${SVBASEUC}_CONFIGNAME"
+if [ -z "$CONFIGNAME" ]; then
+	CONFIGNAME="config"
+fi
+parse_config "$SVSHAREDDIR/$CONFIGNAME"
+parse_config "$(evaldir SYSCONFIG /etc ${SVBASE})"
+parse_config "$HOME/.${SVBASE}"
+parse_config "$HOME/.config/${SVBASE}"
 
 if ! call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
 	cat 1>&2 <<ERR

@@ -1,1 +1,4 @@
 echo file conf
+APPSYS=sys
+SYS=sys
+APPSYSUSER=sys

@@ -21,6 +21,20 @@ If that file isn't present, it will be ignored.
 The default is constructed by adding `<app>` to the content of
 `$SV_SYSCONFIG`.
 
+### `$<APP>_SHARED_DIR` ###
+
+This variable, if set, will contain the name of the directory, were shared
+files of the configuration will be searched in.
+
+The default is constructed by adding `<app>` to the content of
+`$SV_SHARED_DIR`.
+
+### `$<APP>_CONFIGNAME` ###
+
+This variable will be used to determine the
+[[Configuration|Application-wide configurationfile name]]. The default
+is `config`.
+
 ### `$<APP>_SUBCMD_DIR` ###
 
 This variable - if set - specifies the directory, where subverb executables
@@ -33,6 +47,11 @@ the `<app>/subverb`.
 
 This variable should contain the directory, where systemwide configuration
 files for the applications can be found in. The default is `/etc`.
+
+### `$SV_SHARED_DIR` ###
+
+This file should contain the directory, where application shared files
+are stored. The default is `/usr/share`
 
 ### `$SV_SUBCMD_DIR` ###
 

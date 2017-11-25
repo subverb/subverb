@@ -5,6 +5,7 @@
 == configuration ==
 	[X] read config files
 	[ ] read directory of config files
+	[X] provide application/system/user configuration
 	[ ] global command-line parameter parsing
 
 == library ==
