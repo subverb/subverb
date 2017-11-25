@@ -2,5 +2,5 @@
 .*.ref
 
 # tests
-/run_simple1
-/run_simpleconf
+/??.run_simple1
+/??.run_simpleconf

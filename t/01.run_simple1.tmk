@@ -1,4 +1,4 @@
-COMMAND=run_simple1
+COMMAND=01.run_simple1
 SUBVERB=test
 
 define DESCRIPTION

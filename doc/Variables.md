@@ -4,6 +4,11 @@ Great parts of subverb can be configured by setting up environment
 variables accordingly. Within the rest of this document `<APP>` will
 be used as a placeholder for the uppercase-name of the application,
 subverb is used for. `<app>` will reference the application-name itself.
+The application will be equal to the name of the binary. Just if the
+binary name starts with a number followed by a dot, this characters
+will be stripped off. This behaviour can be useful for sorting (or
+testing). For example, if the binary is named `01.foobar`, application
+will be `foobar`.
 
 ## directory/file-lookup ##
 

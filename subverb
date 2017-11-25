@@ -1,6 +1,9 @@
 #!/bin/bash
 
 SVBASE=$(basename $0)
+if [ "0" -le "${SVBASE%%.*}" ] 2>/dev/null; then
+	SVBASE=${SVBASE##*.}
+fi
 SVBASEUC=$(echo $SVBASE | tr a-z A-Z)
 SVCMD=$1
 shift

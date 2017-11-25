@@ -9,7 +9,7 @@ DIRMODE?=0755
 
 PROGRAMS=subverb
 
-TESTS=$(patsubst t/%.tmk,%,$(wildcard t/*.tmk))
+TESTS=$(patsubst t/%.tmk,%,$(sort $(wildcard t/*.tmk)))
 
 all:
 
