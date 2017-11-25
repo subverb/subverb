@@ -9,9 +9,11 @@ DIRMODE?=0755
 
 PROGRAMS=subverb
 
+TESTS=$(patsubst t/%.tmk,%,$(wildcard t/*.tmk))
+
 all:
 
-check: $(patsubst t/%.tmk,check-%,$(wildcard t/*.tmk))
+check: $(addprefix check-,$(TESTS))
 
 install: $(addprefix install-exec-,$(PROGRAMS))
 
