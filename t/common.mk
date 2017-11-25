@@ -22,7 +22,7 @@ $(COMMAND): $(TOPDIR)/subverb
 	echo "$$OUTPUT" > $@
 
 $(COMMAND).cmp: .$(COMMAND).ref .$(COMMAND).res
-	diff -u .$(COMMAND).ref .$(COMMAND).res | tail -n -2
-	@cmp .$(COMMAND).ref .$(COMMAND).res
+	diff -u .$(COMMAND).ref .$(COMMAND).res | tail -n +3
+	@cmp .$(COMMAND).ref .$(COMMAND).res || (echo "t/$(COMMAND).tmk:1: unexpected output"; false)
 
 .PHONY: banner check $(COMMAND).cmp
