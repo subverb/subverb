@@ -1,0 +1,12 @@
+COMMAND=04.non_bash_wrapper
+SUBVERB=test
+
+define DESCRIPTION
+check that starting as /bin/sh wrapper script is possible
+endef
+
+define OUTPUT
+OK
+endef
+
+include common.mk

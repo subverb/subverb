@@ -32,3 +32,10 @@ sets up the environment [[Variables]] and executes (or sources)
 the subverb binary itself. See [[Deployment]] for more information
 on this mechanism.
 
+As subverb uses some bash-features, it reexecutes the
+current binary under bash, if it was started using another shell.
+This occurs only, if a wrapper binary is used or a shell is used explicitly
+to start and has two side-effects:
+* a perfomrance penalty
+* code in the wrapper binary (before sourcing subverb) is executed twice
+
