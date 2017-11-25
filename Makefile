@@ -26,4 +26,8 @@ install-dirs:
 check-%:
 	$(MAKE) -C t -f $(@:check-%=%.tmk) TOPDIR=.. check
 
+clean: TESTBASE=$(addprefix t/., $(TESTS))
+clean:
+	rm -f $(addprefix t/, $(TESTS)) $(addsuffix .res, $(TESTBASE)) $(addsuffix .ref, $(TESTBASE))
+
 .PHONY: all check install install-exec-% install-dirs check-%
