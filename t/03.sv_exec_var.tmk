@@ -1,5 +1,6 @@
 COMMAND=03.sv_exec_var
 SUBVERB=test
+export SV_SUBCMD_DIR=/usr/share
 
 define DESCRIPTION
 test, wether SV_SUBCMD_DIR is taken into account
