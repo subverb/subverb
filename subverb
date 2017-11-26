@@ -18,8 +18,8 @@ evaldir() {
 	NAME=$1
 	DEFAULT=$2
 	SUFFIX=$3
-	eval CONFIGVAR="\$${SVBASEUC}_${NAME}"
-	eval SVCONFIGVAR="\$SV_${NAME}"
+	declare -nr CONFIGVAR="${SVBASEUC}_${NAME}"
+	declare -nr SVCONFIGVAR="SV_${NAME}"
 	if [ -n "$CONFIGVAR" ]; then
 		VALUE="$CONFIGVAR"
 	elif [ -n "$SVCONFIGVAR" ]; then
@@ -76,8 +76,7 @@ if call "${SVEXEC}-pre"; then
 	fi
 fi
 
-declare CONFIGNAME
-eval CONFIGNAME="\$${SVBASEUC}_CONFIGNAME"
+declare -nr CONFIGNAME="${SVBASEUC}_CONFIGNAME"
 if [ -z "$CONFIGNAME" ]; then
 	CONFIGNAME="config"
 fi
