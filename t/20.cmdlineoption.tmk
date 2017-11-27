@@ -1,0 +1,39 @@
+COMMAND=20.cmdlineoption
+SUBVERB=test
+
+define DESCRIPTION
+parse short and long commandline options
+endef
+
+define OUTPUT
+Parsing specified long options
+sv_parse_options --foo --bar a value --foobar --reset bla
+unparsed: 3
+FOO=1
+NOFOO=
+BLABLUPP=a value
+SET=
+RESET=
+FOOBAR=
+SV_UNPARSED=--foobar --reset bla
+
+Parsing auto-options
+sv_parse_options --foo --bar a value --foobar --reset bla
+unparsed: 0
+FOO=1
+NOFOO=
+BLABLUPP=a value
+SET=
+RESET=bla
+FOOBAR=1
+SV_UNPARSED=
+
+Parsing short options
+sv_parse_options -b something -a averb
+BAR=1
+BLUPP=something
+UNBAR=
+SV_UNPARSED=averb
+endef
+
+include common.mk

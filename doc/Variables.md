@@ -57,3 +57,43 @@ are stored. The default is `/usr/share`
 
 This variable should contain the directory, where application-specific
 binary files are stored. The default is `/usr/lib`.
+
+## commandline options ##
+
+The following options are primaly used for parsing commandline-options
+and by the [[LibraryFunctions|function]] `sv_parse_option()`.
+
+### `$SV_OPTION` ###
+
+This is a bash associative array. Each key is string, like given on the
+command-line to specify the option (but without the leading '--').
+The array-value is the name of the environment-variable, were the
+currently set option-value is stored at. If that is prefixed by a
+double-colon ':', the option is interpreted as a flag and a '1' is
+stored, when this option is given.
+The value for non-flag options is specified by the next argument.
+
+commandline options, which aren't specified wont alter the variable.
+
+### `$SV_SHORT_OPTION` ###
+
+Similar to `$SV_OPTION` above, this is an associative array and the
+values are interpreted accordingly. The keys are just single characters,
+each specifying a short-command (without the leading dash '-').
+
+### `$SV_AUTO_OPTIONS` ###
+
+When these variable is set to '1', commandline options, which are
+unknown at the moment of execution of `sv_parse_options()`, those
+option names will be transferred to uppercase and the resulting
+value is used to store the parameter.
+
+The decision, wether such a function is a flag, is made by the first
+character of the next parameter. If that is a dash '-', the current
+option is interpreted to be a flag.
+
+### `$SV_UNPARSED` ###
+
+This (indexed) array is set `sv_parse_options()` to store the
+remaining (unparsed) parameters.
+

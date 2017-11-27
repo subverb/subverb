@@ -65,6 +65,51 @@ parse_config() {
 	done
 }
 
+sv_parse_options() {
+	declare -gA SV_OPTION
+	declare -gA SV_SHORT_OPTION
+	declare -g SV_AUTO_OPTIONS
+	while [ $# -gt 0 ]; do
+		_OPTDESC=
+		case "$1" in
+			--*)
+				_OPTDESC="${SV_OPTION[${1##--}]}"
+				if [ -z "$_OPTDESC" -a "$SV_AUTO_OPTIONS" == 1 ]; then
+					_OPTDESC=$(echo ${1##--} | tr a-z A-Z)
+					if [ "${2:0:1}" == "-" ]; then
+						_OPTDESC=":$_OPTDESC"
+					fi
+				fi
+			;;
+			-?)
+				_OPTDESC="${SV_SHORT_OPTION[${1##-}]}"
+			;;
+		esac
+		if [ -z "$_OPTDESC" ]; then
+			break
+		fi
+		shift
+		case "${_OPTDESC:0:1}" in
+			":")
+		       		_OPTDESC=${_OPTDESC:1}
+				VALUE=1
+				;;
+			[A-Z0-9])
+				VALUE=$1
+				shift
+				;;
+			*)
+				echo "$0: invalid option flag for '${_OPTDESC}'"
+				exit 1
+				;;
+		esac
+		declare -n NAME="$_OPTDESC"
+		NAME="$VALUE"
+	done
+	declare -ga SV_UNPARSED=("$@")
+	return $#
+}
+
 SVSHAREDDIR=$(evaldir SHARED_DIR /usr/share ${SVBASE})
 SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 
