@@ -1,0 +1,13 @@
+COMMAND=21.cmdlineoption
+SUBVERB=parsing
+GARGUMENTS=--testoption blablupp
+
+define DESCRIPTION
+parse options given on the commandline
+endef
+
+define OUTPUT
+TESTOPTION=blablupp
+endef
+
+include common.mk

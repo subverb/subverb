@@ -19,6 +19,7 @@ A usual file will look like the following:
 
 	COMMAND=<TESTNAME>
 	SUBVERB=<VERB>
+	GARGUMENTS=<GLBLCMDLINEARGUMENTS>
 	ARGUMENTS=<CMDLINEARGUMENTS>
 
 	define DESCRIPTION
@@ -33,7 +34,8 @@ A usual file will look like the following:
 
 The first two lines will define the test-command and command and subverb
 to execute. Optionally, commandline-arguments can be given using the
-`ARGUMENTS`-Variable.
+`ARGUMENTS`-Variable. Global commands (which will be placed before the verb)
+should be passed via the optional `GARGUMENTS`.
 `DESCRIPTION` and `OUTPUT` should contain text as noted above.
 The execution and comparision of the test-result is then done by
 `common.mk`.

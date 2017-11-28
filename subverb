@@ -5,14 +5,15 @@ if [ -z "$BASH_VERSION" ]; then
 	exit $?
 fi
 
+declare -gA SV_OPTION
+declare -gA SV_SHORT_OPTION
+declare -g SV_AUTO_OPTIONS
+
 SVBASE=$(basename $0)
 if [ "0" -le "${SVBASE%%.*}" ] 2>/dev/null; then
 	SVBASE=${SVBASE##*.}
 fi
 SVBASEUC=$(echo $SVBASE | tr a-z A-Z)
-SVCMD=$1
-shift
-SVCMD=${SVCMD:-"help"}
 
 evaldir() {
 	NAME=$1
@@ -66,9 +67,6 @@ parse_config() {
 }
 
 sv_parse_options() {
-	declare -gA SV_OPTION
-	declare -gA SV_SHORT_OPTION
-	declare -g SV_AUTO_OPTIONS
 	while [ $# -gt 0 ]; do
 		_OPTDESC=
 		case "$1" in
@@ -113,7 +111,6 @@ sv_parse_options() {
 SVSHAREDDIR=$(evaldir SHARED_DIR /usr/share ${SVBASE})
 SVEXEC=$(evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 
-declare -a EXARGV=("$@")
 if call "${SVEXEC}-pre"; then
 	if [ $RVAL -ne 0 ]; then
 		echo "$0: command preparation failed"
@@ -129,6 +126,13 @@ parse_config "$SVSHAREDDIR/$CONFIGNAME"
 parse_config "$(evaldir SYSCONFIG /etc ${SVBASE})"
 parse_config "$HOME/.${SVBASE}"
 parse_config "$HOME/.config/${SVBASE}"
+sv_parse_options "$@"
+
+set -- "${SV_UNPARSED[@]}"
+SVCMD=$1
+shift
+SVCMD=${SVCMD:-"help"}
+declare -a EXARGV=("$@")
 
 if ! call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
 	cat 1>&2 <<ERR

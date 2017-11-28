@@ -1,4 +1,4 @@
-# Configuration files #
+# Configuration files and options #
 
 Most applications need configuration. For multiverb-applications, these
 usually share a common configuration file.
@@ -10,6 +10,9 @@ configuration files as shell fragments.
 The configuration scheme is based on multiple instances, an
 application-configuration, a system-configuration and a user-configuraion.
 Those will be read in that order, each overwriting previous ones.
+
+Additionally commandline-parameters can be used to modify thos parameters
+for a single run.
 
 ## application configuration ##
 
@@ -37,3 +40,12 @@ User-specific configuration-files will be searched within the users
 `$HOME`-directory, checking for `.<app>`. `.<app>.d`, `.config/<app>`
 or `.config/<app>.d`.
 
+## commandline-parameters ##
+
+When a [[SubverbLocation|preparation library]] sets up the [[Variables]]
+`$SV_OPTION`, `$SV_SHORT_OPTION` or `$SV_AUTO_OPTIONS` correctly,
+global commandline options (which are specified before the concrete
+subverb) are parsed automatically _after_ all configuration-files
+are read. Options given after the verb will be passed to the
+subverb, directly. These can be processed correspondingly using
+the [[LibraryFunctions|function]] `$sv_parse_option`.

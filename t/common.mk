@@ -8,7 +8,7 @@ check: $(COMMAND).cmp
 
 banner:
 	@echo ========================================
-	@echo $(COMMAND) $(SUBVERB) $(ARGUMENTS)
+	@echo $(COMMAND) $(GARGUMENTS) $(SUBVERB) $(ARGUMENTS)
 	@echo "$${DESCRIPTION}"
 	@echo ========================================
 
@@ -16,7 +16,7 @@ $(COMMAND): $(TOPDIR)/subverb
 	test -f $@ || $(LN_SF) $< $@
 
 .$(COMMAND).res: banner $(COMMAND) $(COMMAND).tmk common.mk
-	./$(COMMAND) $(SUBVERB) $(ARGUMENTS) | tee .$(COMMAND).res
+	./$(COMMAND) $(GARGUMENTS) $(SUBVERB) $(ARGUMENTS) | tee .$(COMMAND).res
 
 .$(COMMAND).ref: $(COMMAND).tmk common.mk | banner
 	echo "$$OUTPUT" > $@
