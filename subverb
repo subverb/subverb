@@ -143,6 +143,11 @@ parse_config "$HOME/.${SVBASE}"
 parse_config "$HOME/.config/${SVBASE}"
 sv_parse_options "$@"
 
+if sv_call "${SVEXEC}-configured" && [ $RVAL -ne 0 ]; then
+	echo "$0: command configuration invalid"
+	exit $RVAL
+fi
+
 sv_call_subverb "${SV_UNPARSED[@]}"
 
 RET=$RVAL

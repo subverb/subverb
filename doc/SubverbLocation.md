@@ -30,12 +30,15 @@ and allows an easier handling of (shell-)library functions.
 
 ## common library handling ##
 
-Before the subverb is executed, a common library file is sourced
-and executedi, if it exists. This can be used to prepare the environment,
+Before the subverb is executed, a common library file (`-pre`) is sourced
+and executed, if it exists. This can be used to prepare the environment,
 test some common conditions (which must met for _all_ subverbs) and
 for sourced subverbs provide some common library functions.
 
-Similar, there is a library file, which is called after the
+Another library file (`-configured`) is exectuded, after all
+configuration files have been read.
+
+Similar, there is a library file (`-post`), which is called after the
 subverb has finished. Be aware, that if the subverb is sourced
 and calls `exit()`, this tear-down library will be ignored.
 
