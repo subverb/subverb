@@ -1,0 +1,12 @@
+COMMAND=33.sv_call_subverb
+SUBVERB=test
+
+define DESCRIPTION
+test sv_call_subverb()
+endef
+
+define OUTPUT
+another verb
+endef
+
+include common.mk

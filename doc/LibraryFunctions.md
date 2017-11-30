@@ -43,3 +43,7 @@ are read from `${EXARGV[@]}`. The return-value of the executed
 command can be checked afterwards via `$RVAL`.
 The function will return true, if it has executed something.
 
+## `sv_call_subverb $VERB $@` - call another subverb ##
+
+This function will call the given verb and return afterwards.
+If the verb doesn't exists, the application will be exited.

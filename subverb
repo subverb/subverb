@@ -52,6 +52,21 @@ sv_call() {
 	return 1
 }
 
+sv_call_subverb() {
+	SVCMD=$1
+	shift
+	SVCMD=${SVCMD:-"help"}
+	declare -a EXARGV=("$@")
+
+	if ! sv_call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
+		cat 1>&2 <<ERR
+subcommand ${SVCMD} isn't known.
+Try '${SVBASE} help' for a list of allowed commands
+ERR
+		exit 1
+	fi
+}
+
 parse_config() {
 	for i in "$@"; do
 		if [ -f "$i" ]; then
@@ -128,19 +143,7 @@ parse_config "$HOME/.${SVBASE}"
 parse_config "$HOME/.config/${SVBASE}"
 sv_parse_options "$@"
 
-set -- "${SV_UNPARSED[@]}"
-SVCMD=$1
-shift
-SVCMD=${SVCMD:-"help"}
-declare -a EXARGV=("$@")
-
-if ! sv_call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
-	cat 1>&2 <<ERR
-subcommand ${SVCMD} isn't known.
-Try '${SVBASE} help' for a list of allowed commands
-ERR
-	exit 1
-fi
+sv_call_subverb "${SV_UNPARSED[@]}"
 
 RET=$RVAL
 sv_call "${SVEXEC}-post"
