@@ -29,3 +29,17 @@ by checking the following terms and stop after the first match:
 
 That is exaclty, what this function does.
 
+## `sv_call ${LIST_OF_NAMES[@]}` - call an application ##
+
+This function will go through the list of its arguments and for each
+elemet `<ele>` tries to find:
+
+1) a file with name `<ele>.sh` and source it
+2) an executable `<ele>` and execute it
+
+The first file found, will break the execution.
+The command-line arguments passed to the execution
+are read from `${EXARGV[@]}`. The return-value of the executed
+command can be checked afterwards via `$RVAL`.
+The function will return true, if it has executed something.
+

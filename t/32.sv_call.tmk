@@ -1,0 +1,18 @@
+COMMAND=32.sv_call
+SUBVERB=test
+
+define DESCRIPTION
+test sv_call()
+endef
+
+define OUTPUT
+found: OK (return 0/0)
+shell: shell (return 0/0)
+error: err (return 0/1)
+nf:  (return 1/1)
+nf found: OK (return 0/0)
+nf:  (return 1/0)
+nf found error: OK (return 0/0)
+endef
+
+include common.mk

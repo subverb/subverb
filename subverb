@@ -36,7 +36,7 @@ sv_evaldir() {
 # cmdline-arguments are passed via EXARGV
 # applications return-value is given via RVAL
 # return true, when the command was found
-call() {
+sv_call() {
 	for i in "$@"; do
 		if [ -f "$i.sh" ]; then
 			set -- "${EXARGV[@]}"
@@ -44,7 +44,7 @@ call() {
 			export RVAL=$?
 			return 0
 		elif [ -x "$i" ]; then
-			exec "$i" "${EXARGV[@]}"
+			"$i" "${EXARGV[@]}"
 			export RVAL=$?
 			return 0
 		fi
@@ -111,7 +111,7 @@ sv_parse_options() {
 SVSHAREDDIR=$(sv_evaldir SHARED_DIR /usr/share ${SVBASE})
 SVEXEC=$(sv_evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
 
-if call "${SVEXEC}-pre"; then
+if sv_call "${SVEXEC}-pre"; then
 	if [ $RVAL -ne 0 ]; then
 		echo "$0: command preparation failed"
 		exit $RVAL
@@ -134,7 +134,7 @@ shift
 SVCMD=${SVCMD:-"help"}
 declare -a EXARGV=("$@")
 
-if ! call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
+if ! sv_call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
 	cat 1>&2 <<ERR
 subcommand ${SVCMD} isn't known.
 Try '${SVBASE} help' for a list of allowed commands
@@ -143,6 +143,6 @@ ERR
 fi
 
 RET=$RVAL
-call "${SVEXEC}-post"
+sv_call "${SVEXEC}-post"
 
 exit $RET
