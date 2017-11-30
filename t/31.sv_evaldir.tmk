@@ -1,0 +1,19 @@
+COMMAND=31.sv_evaldir
+SUBVERB=test
+export SV_PARAM1=/foo
+export SV_PARAM2=/foo
+export SV_EVALDIR_PARAM2=/bar
+export SV_EVALDIR_PARAM3=/bar
+
+define DESCRIPTION
+test sv_evaldir()
+endef
+
+define OUTPUT
+PARAM1=./foo/suffix
+PARAM2=./bar
+PARAM3=./bar
+PARAM4=./default/suffix
+endef
+
+include common.mk

@@ -18,3 +18,14 @@ the values of `$SV_OPTION`, `$SV_SHORT_OPTION` and `$SV_AUTO_OPTIONS`
 is taken into account. These should be set up before calling
 the function. Unparsed options will be passed back via `$SV_UNPARSED`.
 
+## `sv_evaldir $NAME $DEFAULT $SUFFIX` - try to evaluate a path from config ##
+
+A quite common task is to check for some configuration file or directory
+by checking the following terms and stop after the first match:
+
+1) is there a `$<APP>_<NAME>` defined? Then use that value
+2) is there a `$SV_<NAME>` defined? Then append `/$SUFFIX` and use that
+3) otherwise use `$DEFAULT/$SUFFIX`
+
+That is exaclty, what this function does.
+
