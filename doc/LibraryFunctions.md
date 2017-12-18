@@ -59,3 +59,6 @@ and
 	# SV_GROUP: foo
 are equivalent
 
+If a parameter is given, the help for the corresponding submodule
+should be displayed. This will be received by the
+HERE-text [[Variables|$SV_HELP]].

@@ -103,3 +103,15 @@ remaining (unparsed) parameters.
 
 the content of this variable can be used to group commands, for listing the available
 commands in help-mode
+
+### `$SV_HELP` ###
+
+this variable should be set as a here-text or within a comment and contain a descriptive
+text of the resp. sub-command. Eg.
+
+	# SV_HELP
+	# this sub command will do something
+	# SV_HELP
+
+Be aware, that this currently is parsed only from sourced (.sh) subverbs.
+

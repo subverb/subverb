@@ -1,0 +1,13 @@
+COMMAND=41.sv_help
+SUBVERB=help
+ARGUMENTS=a
+
+define DESCRIPTION
+show help-text from comment
+endef
+
+define OUTPUT
+just a test help text
+endef
+
+include common.mk

@@ -74,11 +74,20 @@ sv_help_list() {
 	done
 }
 
+sv_help_file() {
+	if [ -e "${SVEXEC}/$1.sh" ]; then
+		sed -ne '/SV_HELP/,/SV_HELP/{/SV_HELP/d;s/^# \?//;p};d' "${SVEXEC}/$1.sh"
+	else
+		echo no help for $1 found
+	fi
+}
+
 sv_help() {
 	if [ "$#" -le 0 ]; then
 		sv_help_list
 		return
 	fi
+	sv_help_file $1
 }
 
 sv_call_subverb() {
