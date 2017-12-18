@@ -52,6 +52,35 @@ sv_call() {
 	return 1
 }
 
+sv_group_cmds() {
+	declare -gA SV_GROUP_CMDS
+	if [ "${#SV_GROUP_CMDS}" -gt 0 ]; then
+		return
+	fi
+	for file in ${SVEXEC}/*; do
+		cmd=$(basename "$file" .sh)
+		group=$(sed -ne '/^[# ]*SV_GROUP[:= ]\s*/{s/.*[A-Z]*[:= ]\s*\([-_.a-zA-Z]*\).*/\1/;p;q}' $file)
+		group=${group:-unsorted}
+		SV_GROUP_CMDS[${group}]="$cmd,${SV_GROUP_CMDS[$group]}"
+	done
+}
+
+sv_help_list() {
+	sv_group_cmds
+	for grp in "${!SV_GROUP_CMDS[@]}"; do
+		echo "Available $grp subcommands:"
+		echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/\n/g' | sort | column
+		echo
+	done
+}
+
+sv_help() {
+	if [ "$#" -le 0 ]; then
+		sv_help_list
+		return
+	fi
+}
+
 sv_call_subverb() {
 	SVCMD=$1
 	shift
@@ -59,6 +88,10 @@ sv_call_subverb() {
 	declare -a EXARGV=("$@")
 
 	if ! sv_call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
+		if [ "$SVCMD" == "help" ]; then
+			sv_help "$@"
+			return
+		fi
 		cat 1>&2 <<ERR
 subcommand ${SVCMD} isn't known.
 Try '${SVBASE} help' for a list of allowed commands

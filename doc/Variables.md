@@ -97,3 +97,9 @@ option is interpreted to be a flag.
 This (indexed) array is set `sv_parse_options()` to store the
 remaining (unparsed) parameters.
 
+## help and help generation ##
+
+### `$SV_GROUP` ###
+
+the content of this variable can be used to group commands, for listing the available
+commands in help-mode

@@ -10,7 +10,7 @@
 
 == library ==
 	[X] pre-sourcing of library functions
-	[ ] auto-help
+	[X] auto-help
 
 == tools ==
 	[ ] bash completion

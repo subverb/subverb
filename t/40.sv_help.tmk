@@ -1,0 +1,17 @@
+COMMAND=40.sv_help
+SUBVERB=help
+
+define DESCRIPTION
+list available sub-commands (grouped)
+endef
+
+define OUTPUT
+Available init subcommands:
+a	b	c
+
+Available unsorted subcommands:
+bar	foo
+
+endef
+
+include common.mk

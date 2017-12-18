@@ -47,3 +47,15 @@ The function will return true, if it has executed something.
 
 This function will call the given verb and return afterwards.
 If the verb doesn't exists, the application will be exited.
+
+## `sv_help` - print usage ##
+
+calling this function, without parameter will list all available
+subverbs, grouped by their resp. [[Variables|$SV_GROUP]]. This can
+also be specified within a comment, so
+
+	SV_GROUP=foo
+and
+	# SV_GROUP: foo
+are equivalent
+
