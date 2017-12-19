@@ -18,6 +18,17 @@ the values of `$SV_OPTION`, `$SV_SHORT_OPTION` and `$SV_AUTO_OPTIONS`
 is taken into account. These should be set up before calling
 the function. Unparsed options will be passed back via `$SV_UNPARSED`.
 
+## `sv_default_dir $CLASS` ##
+
+computes the directory, which should be used for the given class.
+The following classes are currently supported:
+
+* `data` - used to search for system-wide data (/usr/share)
+* `pkgdata` - used to place application-specific data (/usr/share/<pkg>)
+* `pkglib` - used to place application-specific libraries (/usr/lib/<pkg>)
+* `subverb` - used to store the available subverb-implementations (/usr/lib/<pkg>/subverb)
+* `sysconf` - used to store system-wide configuration files (/etc/<pkg>)
+
 ## `sv_evaldir $NAME $DEFAULT $SUFFIX` - try to evaluate a path from config ##
 
 A quite common task is to check for some configuration file or directory

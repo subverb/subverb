@@ -165,8 +165,31 @@ sv_parse_options() {
 	return $#
 }
 
-SVSHAREDDIR=$(sv_evaldir SHARED_DIR /usr/share ${SVBASE})
-SVEXEC=$(sv_evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb)
+sv_default_dir() {
+	case "$1" in
+		data)
+			sv_evaldir SHARED_DIR /usr/share
+			;;
+		pkgdata)
+			sv_evaldir SHARED_DIR /usr/share ${SVBASE}
+			;;
+		pkglib)
+			sv_evaldir SUBCMD_DIR /usr/lib ${SVBASE}
+			;;
+		subverb)
+			sv_evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb
+			;;
+		sysconf)
+			sv_evaldir SYSCONFIG /etc ${SVBASE}
+			;;
+		*)
+			echo "unknown dir-class $1" 1>&2
+			exit 1
+			;;
+	esac
+}
+
+SVEXEC=$(sv_default_dir subverb)
 
 if sv_call "${SVEXEC}-pre"; then
 	if [ $RVAL -ne 0 ]; then
@@ -179,8 +202,8 @@ declare -nr CONFIGNAME="${SVBASEUC}_CONFIGNAME"
 if [ -z "$CONFIGNAME" ]; then
 	CONFIGNAME="config"
 fi
-parse_config "$SVSHAREDDIR/$CONFIGNAME"
-parse_config "$(sv_evaldir SYSCONFIG /etc ${SVBASE})"
+parse_config "$(sv_default_dir pkgdata)/$CONFIGNAME"
+parse_config "$(sv_default_dir sysconf)"
 parse_config "$HOME/.${SVBASE}"
 parse_config "$HOME/.config/${SVBASE}"
 sv_parse_options "$@"
