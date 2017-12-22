@@ -174,7 +174,7 @@ sv_default_dir() {
 			sv_evaldir SHARED_DIR /usr/share ${SVBASE}
 			;;
 		pkglib)
-			sv_evaldir SUBCMD_DIR /usr/lib ${SVBASE}
+			sv_evaldir LIB_DIR /usr/lib ${SVBASE}
 			;;
 		subverb)
 			sv_evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb
