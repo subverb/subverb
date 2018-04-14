@@ -25,6 +25,32 @@ if [ "0" -le "${SVBASE%%.*}" ] 2>/dev/null; then
 fi
 SVBASEUC=$(echo $SVBASE | tr a-z A-Z)
 
+case "$0" in
+	*/*)
+		_SVBASECMD="$0"
+		;;
+	*)
+		_SVBASECMD=$(which $0)
+		;;
+esac
+export SVBASEEXECDIR=$(dirname $_SVBASECMD)
+export PATH="$PATH:$SVBASEEXECDIR"
+case "$SVBASEEXECDIR" in
+	*/bin|bin|*/sbin|sbin)
+		export SVBASEROOTDIR=$(dirname $SVBASEEXECDIR)
+	;;
+	*)
+		export SVBASEROOTDIR=${SVBASEEXECDIR}
+	;;
+esac
+export SVBASESHAREDIR="$SVBASEROOTDIR/share"
+export SVBASELIBDIR="$SVBASEROOTDIR/lib"
+if [ "$SVBASEROOTDIR" = "/usr" ]; then
+	export SVBASECONFDIR=/etc
+else
+	export SVBASECONFDIR="$SVBASEROOTDIR/etc"
+fi
+
 sv_evaldir() {
 	NAME=$1
 	DEFAULT=$2
@@ -179,19 +205,19 @@ sv_parse_options() {
 sv_default_dir() {
 	case "$1" in
 		data)
-			sv_evaldir SHARED_DIR /usr/share
+			sv_evaldir SHARED_DIR ${SVBASESHAREDIR}
 			;;
 		pkgdata)
-			sv_evaldir SHARED_DIR /usr/share ${SVBASE}
+			sv_evaldir SHARED_DIR ${SVBASESHAREDIR} ${SVBASE}
 			;;
 		pkglib)
-			sv_evaldir LIB_DIR /usr/lib ${SVBASE}
+			sv_evaldir LIB_DIR ${SVBASELIBDIR} ${SVBASE}
 			;;
 		subverb)
-			sv_evaldir SUBCMD_DIR /usr/lib ${SVBASE}/subverb
+			sv_evaldir SUBCMD_DIR ${SVBASELIBDIR} ${SVBASE}/subverb
 			;;
 		sysconf)
-			sv_evaldir SYSCONFIG /etc ${SVBASE}
+			sv_evaldir SYSCONFIG ${SVBASECONFDIR} ${SVBASE}
 			;;
 		*)
 			echo "unknown dir-class $1" 1>&2

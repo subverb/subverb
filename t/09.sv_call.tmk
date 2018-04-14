@@ -6,11 +6,11 @@ test sv_default_dir()
 endef
 
 define OUTPUT
-data: ./usr/share/
-pkgdata: ./usr/share/sv_call
-pkglib: ./usr/lib/sv_call
-subverb: ./usr/lib/sv_call/subverb
-sysconf: ./etc/sv_call
+data: ././share/
+pkgdata: ././share/sv_call
+pkglib: ././lib/sv_call
+subverb: ././lib/sv_call/subverb
+sysconf: ././etc/sv_call
 endef
 
 include common.mk

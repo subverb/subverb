@@ -10,10 +10,10 @@ test sv_evaldir()
 endef
 
 define OUTPUT
-PARAM1=./foo/suffix
-PARAM2=./bar
-PARAM3=./bar
-PARAM4=./default/suffix
+PARAM1=.//foo/suffix
+PARAM2=.//bar
+PARAM3=.//bar
+PARAM4=.//default/suffix
 endef
 
 include common.mk
