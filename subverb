@@ -47,6 +47,7 @@ sv_evaldir() {
 # applications return-value is given via RVAL
 # return true, when the command was found
 sv_call() {
+	export RVAL="-1"
 	for i in "$@"; do
 		if [ -f "$i.sh" ]; then
 			set -- "${EXARGV[@]}"
