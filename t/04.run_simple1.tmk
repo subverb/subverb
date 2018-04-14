@@ -1,0 +1,19 @@
+COMMAND=04.run_simple1
+SUBVERB=test
+
+define DESCRIPTION
+start the subverb test of ${COMMAND} from PATH
+endef
+
+define OUTPUT
+./t/lib/run_simple1/subverb/${SUBVERB}
+OK
+endef
+
+.${COMMAND}.res:
+	cd ${TOPDIR} && PATH="${PATH}:t" ${COMMAND} ${SUBVERB} | tee t/$@
+
+TEST_OWN_CMDDEF=1
+
+include common.mk
+
