@@ -1,0 +1,19 @@
+COMMAND=03.run_simple1
+SUBVERB=test
+
+define DESCRIPTION
+start the subverb test of bin/${COMMAND} from another directory
+endef
+
+define OUTPUT
+././lib/run_simple1/subverb/${SUBVERB}
+OK
+endef
+
+.03.run_simple1.res:
+	bin/${COMMAND} ${SUBVERB} | tee $@
+
+TEST_OWN_CMDDEF=1
+
+include common.mk
+
