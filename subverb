@@ -9,6 +9,16 @@ declare -gA SV_OPTION
 declare -gA SV_SHORT_OPTION
 declare -g SV_AUTO_OPTIONS
 
+case "${SVBASEDIR}" in
+	"")
+	;;
+	"*/")
+	;;
+	*)
+	export SVBASEDIR="${SVBASEDIR}/";
+	;;
+esac
+
 SVBASE=$(basename $0)
 if [ "0" -le "${SVBASE%%.*}" ] 2>/dev/null; then
 	SVBASE=${SVBASE##*.}
