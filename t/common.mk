@@ -16,7 +16,11 @@ $(COMMAND): $(TOPDIR)/subverb
 	test -f $@ || $(LN_SF) $< $@
 
 .$(COMMAND).res: banner $(COMMAND) $(COMMAND).tmk common.mk
+
+ifndef TEST_OWN_CMDDEF
+.$(COMMAND).res:
 	./$(COMMAND) $(GARGUMENTS) $(SUBVERB) $(ARGUMENTS) | tee .$(COMMAND).res
+endif
 
 .$(COMMAND).ref: $(COMMAND).tmk common.mk | banner
 	echo "$$OUTPUT" > $@
