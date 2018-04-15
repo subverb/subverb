@@ -18,10 +18,10 @@ check: $(addprefix check-,$(TESTS))
 install: $(addprefix install-exec-,$(PROGRAMS))
 
 install-exec-%: install-dirs
-	$(INSTALL) -m $(EXECMODE) $*  $(BINDIR)
+	$(INSTALL) -m $(EXECMODE) $*  $(DESTDIR)$(BINDIR)
 
 install-dirs:
-	$(INSTALL) -m $(DIRMODE) -d $(BINDIR)
+	$(INSTALL) -m $(DIRMODE) -d $(DESTDIR)$(BINDIR)
 
 check-%:
 	$(MAKE) -C t -f $(@:check-%=%.tmk) TOPDIR=.. check
