@@ -2,12 +2,13 @@ Source: subverb
 Maintainer: Benjamin Tietz <benjamin@micronet24.de>
 Section: libs
 Priority: optional
-Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 9), bash (>= 4.0)
+Standards-Version: 3.9.8
+Build-Depends: debhelper (>= 10), bash (>= 4.0)
 Homepage: http://dresden.micronet24.de/projects/subverb
 
 Package: subverb
 Architecture: all
+Depends: ${misc:Depends}
 Description: framework for calling command-verbs
  Complex commands often need a action or verb to be selected by the user
  for triggering the desired action. Subverb will provide a framework, so
@@ -16,6 +17,8 @@ Description: framework for calling command-verbs
 
 Package: subverb-doc
 Architecture: all
+Section: doc
+Depends: ${misc:Depends}
 Description: framework for calling command-verbs - documentation files
  Complex commands often need a action or verb to be selected by the user
  for triggering the desired action. Subverb will provide a framework, so
