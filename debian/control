@@ -12,3 +12,14 @@ Description: framework for calling command-verbs
   for triggering the desired action. Subverb will provide a framework, so
   that the development can concentrate on implenting these actions and not
   the logic to call those.
+
+Package: subverb-doc
+Architecture: all
+Description: framework for calling command-verbs - documentation files
+  Complex commands often need a action or verb to be selected by the user
+  for triggering the desired action. Subverb will provide a framework, so
+  that the development can concentrate on implenting these actions and not
+  the logic to call those.
+  .
+  This package contains documentational files to develop programs using
+  subverb
