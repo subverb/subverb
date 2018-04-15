@@ -1,0 +1,14 @@
+Source: subverb
+Maintainer: Benjamin Tietz <benjamin@micronet24.de>
+Section: libs
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9), bash (>= 4.0)
+
+Package: subverb
+Architecture: all
+Description: framework for calling command-verbs
+  Complex commands often need a action or verb to be selected by the user
+  for triggering the desired action. Subverb will provide a framework, so
+  that the development can concentrate on implenting these actions and not
+  the logic to call those.
