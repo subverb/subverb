@@ -128,9 +128,8 @@ sv_help() {
 }
 
 sv_call_subverb() {
-	SVCMD=$1
+	SVCMD=${1:-"help"}
 	shift
-	SVCMD=${SVCMD:-"help"}
 	declare -a EXARGV=("$@")
 
 	if ! sv_call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
