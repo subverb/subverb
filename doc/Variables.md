@@ -58,6 +58,12 @@ are stored. The default is `/usr/share`
 This variable should contain the directory, where application-specific
 binary files are stored. The default is `/usr/lib`.
 
+### `$SV_ALLOW_UNSAFE_SUBVERB` ###
+
+If this variable is set to a _positive number_, calling subverbs outside
+of the default `$SV_SUBCMD_DIR/subverb`. This can be used for testing,
+by specifying a full-path subverb [[SubverbLocation|or via subverb evaluation]].
+
 ## commandline options ##
 
 The following options are primaly used for parsing commandline-options

@@ -28,6 +28,23 @@ If the file found ends with a .sh-suffix, it will be sourced
 instead of executed directly, which gives an performance improvement
 and allows an easier handling of (shell-)library functions.
 
+## shebang evaluation ##
+
+When the subverb implementing file provides a shebang, which references
+the main command, this will be interpreted, as if the subverb
+was called from the main-command. So if the file
+`/usr/lib/foo/subverb/bar.sh` starts with the line
+
+	#!/usr/bin/foo
+
+The following invocations will have the same result
+
+	$ foo bar
+	$ /usr/lib/foo/subverb/bar.sh
+
+As a loop-hole would be the result otherwise, this only works for
+sourced subverbs (where the file has the `.sh`-extension).
+
 ## common library handling ##
 
 Before the subverb is executed, a common library file (`-pre`) is sourced

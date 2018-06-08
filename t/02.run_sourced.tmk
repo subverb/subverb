@@ -1,0 +1,20 @@
+COMMAND=02.run_sourced
+SUBVERB=test
+TEST_OWN_CMDDEF=1
+FPSUBVERB=./lib/run_sourced/subverb/test.sh 
+
+define DESCRIPTION
+start the subverb $(FPSUBVERB) directly
+This should start 01.run_sourced (via the shebang) and source
+the subverb $(SUBVERB)
+endef
+
+define OUTPUT
+./01.run_sourced
+OK
+endef
+
+include common.mk
+
+.$(COMMAND).res:
+	$(FPSUBVERB) | tee $@

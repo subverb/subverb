@@ -142,6 +142,48 @@ sv_call_subverb() {
 	shift
 	declare -a EXARGV=("$@")
 
+	SVCHKDIR=
+	case "${SVCMD}" in
+		/*)
+			SVCHKDIR=$(dirname ${SVCMD})
+			;;
+		./*)
+			SVCMD="${PWD}/${SVCMD}"
+			SVCHKDIR=$(dirname ${SVCMD})
+			;;
+		*/*)
+			if [ ! \( -f "${SVEXEC}/${SVCMD}" -o -f ${SVEXEC}/${SVCMD}.* \) ]; then
+				SVCHKDIR="$(pwd)/$(dirname ${SVCMD})"
+			fi
+			;;
+	esac
+
+	if [ -n "${SVCHKDIR}" ]; then
+		SVCHKDIR=$(realpath -m ${SVCHKDIR})
+		case "${SVEXEC}" in
+			/*/./*|/*/../*)
+				SVEXEC=$(realpath -m "${SVEXEC}")
+				;;
+			/*)
+				;;
+			*)
+				SVEXEC=$(realpath -m "${PWD}/${SVEXEC}")
+				;;
+		esac
+		if [ "${SVCHKDIR}" == "${SVEXEC}" ]; then
+			SVCMD=$(basename ${SVCMD})
+		elif [ -n "${SV_ALLOW_UNSAFE_SUBVERB}" -a "${SV_ALLOW_UNSAFE_SUBVERB}" -ge 1 ]; then
+			if ! sv_call "${SVCMD}"; then
+				echo "unsafe subverb '${SVCMD}' wasn't found." >&2
+				exit 1
+			fi
+			return 0
+		else
+			echo "execution of unsafe subverb '${SVCMD}' denied" >&2
+			exit 1
+		fi
+	fi
+
 	if ! sv_call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
 		if [ "$SVCMD" == "help" ]; then
 			sv_help "$@"
