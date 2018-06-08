@@ -75,16 +75,26 @@ sv_evaldir() {
 sv_call() {
 	export RVAL="-1"
 	for i in "$@"; do
-		if [ -f "$i.sh" ]; then
-			set -- "${EXARGV[@]}"
-			. "$i.sh"
-			export RVAL=$?
-			return 0
-		elif [ -x "$i" ]; then
-			"$i" "${EXARGV[@]}"
-			export RVAL=$?
-			return 0
-		fi
+		for ext in .sh ""; do
+			file="${i}${ext}"
+			case "$file" in
+				*.sh)
+					if [ -f "$file" ]; then
+						set -- "${EXARGV[@]}"
+						. "$file"
+						export RVAL=$?
+						return 0
+					fi
+					;;
+				*)
+					if [ -x "$i" ]; then
+						"$i" "${EXARGV[@]}"
+						export RVAL=$?
+						return 0
+					fi
+					;;
+			esac
+		done
 	done
 	return 1
 }
