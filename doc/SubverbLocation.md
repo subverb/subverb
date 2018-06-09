@@ -42,8 +42,19 @@ The following invocations will have the same result
 	$ foo bar
 	$ /usr/lib/foo/subverb/bar.sh
 
-As a loop-hole would be the result otherwise, this only works for
-sourced subverbs (where the file has the `.sh`-extension).
+Subverbs which aren't sourced (where the file has the `.sh`-extension),
+have to provide an extended header giving the interpreter for the subverb
+itself, like
+
+	#!/usr/bin/foo
+	# SV_SHEBANG: /bin/sh
+
+Otherwise a loop-hole on calling the main application will occur. The
+`SV_SHEBANG` must be located in the second line. For sourced subverb,
+this will be simply ignored.
+
+For compiled subverbs (executables without a shebang), the decision, wether
+to call the main application, must be done within the application.
 
 ## common library handling ##
 

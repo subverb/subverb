@@ -1,0 +1,19 @@
+COMMAND=06.run_simple1
+SUBVERB=test
+TEST_OWN_CMDDEF=1
+FPSUBVERB=lib/run_simple1/subverb/test
+
+define DESCRIPTION
+just start the subverb ${SUBVERB} of ${COMMAND}
+directly via ${FP_SUBVERB}
+endef
+
+define OUTPUT
+$(shell realpath -m $(PWD)/${FPSUBVERB})
+OK
+endef
+
+include common.mk
+
+.$(COMMAND).res:
+	$(FPSUBVERB) | tee $@

@@ -1,4 +1,5 @@
-#!/bin/sh
+#!./01.run_simple1
+# SV_SHEBANG: /bin/sh
 
 echo $0
 echo OK

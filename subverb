@@ -68,6 +68,17 @@ sv_evaldir() {
 
 }
 
+_sv_call_altshebang() {
+	sv_shebang_regex="#\s*SV_SHEBANG\s*[:=]?\s*(.*)"
+	if ( head -n 1 $1 | grep -q "^#!" ) &&
+			[[ "$(head -n 2 $1 | tail -n 1)" =~ $sv_shebang_regex ]]; then
+		SV_SHEBANG=${BASH_REMATCH[1]}
+		$SV_SHEBANG "$@"
+	else
+		"$@"
+	fi
+}
+
 # call an external application
 # cmdline-arguments are passed via EXARGV
 # applications return-value is given via RVAL
@@ -88,7 +99,7 @@ sv_call() {
 					;;
 				*)
 					if [ -x "$i" ]; then
-						"$i" "${EXARGV[@]}"
+						_sv_call_altshebang "$i" "${EXARGV[@]}"
 						export RVAL=$?
 						return 0
 					fi
