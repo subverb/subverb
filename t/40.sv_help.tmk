@@ -14,6 +14,11 @@ a	b	c
 Available unsorted subcommands:
 bar	foo
 
+Supported global options:
+	-a <param>	help for short-option A
+	--bar, -b	help for flag BAR
+	--bla <param>	help for long-option BLA
+	--foo, -f <param>	help for option FOO
 
 ## show simple help ##
 

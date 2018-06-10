@@ -187,6 +187,7 @@ sv_help_list() {
 		echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/\n/g' | sort | column
 		echo
 	done
+	sv_option_help "Supported global options:"
 	_sv_print_docfile HELP.md || _sv_print_docfile README.md
 }
 
