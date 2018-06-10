@@ -42,3 +42,20 @@ string on the following lines and closing with another `SV_HELP`-line.
 The lines between will get one leading hashmark '#' stripped and the
 result is printed to the user.
 
+### commandline options ###
+
+Commandline options can be specified by [[Variables|$SV_OPTION and $SV_SHORT_OPTION]].
+To provide a description of those options, a corresponding `$SV_OPTION_HELP`
+should be defined, giving a description, of what this option does.
+
+`sv_option_help()` will use this information to create corresponding
+help-texts.
+
+	SV_OPTION[foo]=VAR_FOO
+	SV_SHORT_OPTION[f]=VAR_FOO
+	SV_OPTION_HELP[VAR_FOO]="will frobnicate the output"
+
+will generate a helpline like:
+
+	--foo, -f=<param>	will frobnicate the output
+

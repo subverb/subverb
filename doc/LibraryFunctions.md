@@ -82,6 +82,17 @@ If a parameter is given, the help for the corresponding submodule
 should be displayed. This will be received by the
 HERE-text [[Variables|$SV_HELP]].
 
+## `sv_option_help ["headline"]` - generate an option-help text ##
+
+all options currently set up via [[Variables|$SV_OPTION, $SV_SHORT_OPTION and $SV_OPTION_HELP]]
+will be searched and for each option a corresponding help-text
+is shown on the screen.
+
+The options will be sorted by the name of the variable, they respond
+to. If no options are found, the headline is suppressed.
+Otherwise, the helpline given as parameter is used.
+"Supported options:" will be used, if no headline is given.
+
 ## `sv_sort` - sort a given set of words ##
 
 this function will sort all words, given as parameter.

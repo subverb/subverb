@@ -87,6 +87,12 @@ Similar to `$SV_OPTION` above, this is an associative array and the
 values are interpreted accordingly. The keys are just single characters,
 each specifying a short-command (without the leading dash '-').
 
+### `$SV_OPTION_HELP` ###
+
+is an associative array. The key is the variable, specified by
+`$SV_OPTION` or `$SV_SHORT_OPTION`. The value is used as a
+description, of what the corresponding option will affect.
+
 ### `$SV_AUTO_OPTIONS` ###
 
 When these variable is set to '1', commandline options, which are

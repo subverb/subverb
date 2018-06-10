@@ -7,6 +7,7 @@ fi
 
 declare -gA SV_OPTION
 declare -gA SV_SHORT_OPTION
+declare -gA SV_OPTION_HELP
 declare -g SV_AUTO_OPTIONS
 
 case "${SVBASEDIR}" in
@@ -146,6 +147,32 @@ sv_append_arrval() {
 	else
 		ass_arr[$key]="${ass_arr[$key]}$sep$val"
 	fi
+}
+
+sv_option_help() {
+	declare -A help_option
+	for opt in "${!SV_OPTION[@]}"; do
+		sv_append_arrval help_option ${SV_OPTION[$opt]} "--$opt" ", "
+	done
+	for opt in "${!SV_SHORT_OPTION[@]}"; do
+		sv_append_arrval help_option ${SV_SHORT_OPTION[$opt]} "-$opt" ", "
+	done
+
+	if [ -z "${!help_option[*]}" ]; then
+		return
+	fi
+
+	echo ${1:-"Supported options:"}
+	varsort=($(sv_sort "${!help_option[@]}"))
+	for var in "${varsort[@]}"; do
+		echo -en "\t${help_option[$var]}"
+		if [ "${var:0:1}" == ":" ]; then
+			var=${var:1}
+		else
+			echo -n " <param>"
+		fi
+		echo -e "\t${SV_OPTION_HELP[$var]}"
+	done
 }
 
 sv_help_list() {
