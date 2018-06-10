@@ -28,6 +28,7 @@ The following classes are currently supported:
 * `pkglib` - used to place application-specific libraries (/usr/lib/<pkg>)
 * `subverb` - used to store the available subverb-implementations (/usr/lib/<pkg>/subverb)
 * `sysconf` - used to store system-wide configuration files (/etc/<pkg>)
+* `doc` - used to store application-documentation files (/usr/share/doc/<pkg>)
 
 ## `sv_evaldir $NAME $DEFAULT $SUFFIX` - try to evaluate a path from config ##
 
