@@ -1,0 +1,13 @@
+COMMAND=31.run_sourced
+SUBVERB=sv_append_arrval
+
+define DESCRIPTION
+test associative array appending function sv_append_arrval()
+endef
+
+define OUTPUT
+bar: 1, 2
+bla: 3
+endef
+
+include common.mk

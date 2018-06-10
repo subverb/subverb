@@ -18,6 +18,13 @@ the values of `$SV_OPTION`, `$SV_SHORT_OPTION` and `$SV_AUTO_OPTIONS`
 is taken into account. These should be set up before calling
 the function. Unparsed options will be passed back via `$SV_UNPARSED`.
 
+## `sv_append_arrval ASS_ARRAY $KEY $VALUE $SEPERATOR` - append a string to a associative array's value ##
+
+This function will check, wether the given key of the array already
+has a value assigned. If not the new value will be assigned,
+otherwise a new string will be created by appending the old value,
+the `$SEPERATOR` and `$VALUE`.
+
 ## `sv_default_dir $CLASS` ##
 
 computes the directory, which should be used for the given class.
