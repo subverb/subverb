@@ -132,6 +132,10 @@ _sv_print_docfile() {
 	cat $file
 }
 
+sv_sort() {
+	for i in "$@"; do echo $i; done | sort
+}
+
 sv_help_list() {
 	declare -nr DESCVAR="${SVBASEUC}_DESCRIPTION"
 	if [ -n "${DESCVAR}" ]; then

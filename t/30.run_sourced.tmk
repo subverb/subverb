@@ -1,0 +1,17 @@
+COMMAND=30.run_sourced
+SUBVERB=sv_sort
+
+define DESCRIPTION
+test word sorting function sv_sort()
+endef
+
+define OUTPUT
+a
+b
+c
+d
+e
+f
+endef
+
+include common.mk

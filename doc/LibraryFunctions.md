@@ -74,3 +74,8 @@ are equivalent
 If a parameter is given, the help for the corresponding submodule
 should be displayed. This will be received by the
 HERE-text [[Variables|$SV_HELP]].
+
+## `sv_sort` - sort a given set of words ##
+
+this function will sort all words, given as parameter.
+
