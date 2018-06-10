@@ -14,8 +14,17 @@ The following lines will describe that function's behaviour.
 Any implementation of a subverb called `help` will overwrite
 these.
 
-The main description contains of a list of known subverbs,
-which is generated and printed grouped by their `$SV_GROUP` specifications.
+A short description, of what the application is meant to be for
+can be given by declaring [[Variables|$<SV>_DESCRIPTION]], for
+example within a wrapper or via the applications `subverb-pre.sh`
+extensions. If this is present, it will be presented to the user
+as a major part of the description.
+
+If a multiline description is wanted, the variable should be declared
+via an here-document.
+
+After that main description, a list of known subverbs is generated
+and printed grouped by their `$SV_GROUP` specifications.
 
 ### Subverb-specific messages ###
 

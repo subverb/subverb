@@ -6,6 +6,8 @@ list available sub-commands (grouped)
 endef
 
 define OUTPUT
+short help text
+
 Available init subcommands:
 a	b	c
 

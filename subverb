@@ -124,6 +124,11 @@ sv_group_cmds() {
 }
 
 sv_help_list() {
+	declare -nr DESCVAR="${SVBASEUC}_DESCRIPTION"
+	if [ -n "${DESCVAR}" ]; then
+		echo "${DESCVAR}"
+		echo
+	fi
 	sv_group_cmds
 	for grp in "${!SV_GROUP_CMDS[@]}"; do
 		echo "Available $grp subcommands:"

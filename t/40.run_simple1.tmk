@@ -1,0 +1,15 @@
+COMMAND=40.run_simple1
+SUBVERB=help
+
+define DESCRIPTION
+print an ungrouped list of subcommands and no further help-text,
+as no help is provided by the application.
+endef
+
+define OUTPUT
+Available unsorted subcommands:
+test
+
+endef
+
+include common.mk

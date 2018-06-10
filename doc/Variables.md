@@ -121,3 +121,8 @@ text of the resp. sub-command. Eg.
 
 Be aware, that this currently is parsed only from sourced (.sh) subverbs.
 
+### `$<APP>_DESCRIPTION` ###
+
+If this is set (via a wrapper-script or using `subverb-pre.sh`, the corresponding will
+be printed as a (short) description, of what the application is used to, when
+printing the [[GivingHelp|help-text]].
