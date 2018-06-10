@@ -192,10 +192,35 @@ sv_help_list() {
 }
 
 sv_help_file() {
-	if [ -e "${SVEXEC}/$1.sh" ]; then
-		sed -ne '/SV_HELP/,/SV_HELP/{/SV_HELP/d;s/^# \?//;p};d' "${SVEXEC}/$1.sh"
-	else
-		echo no help for $1 found
+	subverb="$1"
+	file="${2:-${SVEXEC}/$1}"
+	run_option_help=0
+	parse_sv_help=1
+	help_handling="$(sed -ne '/SV_HANDLE_HELP[:=]\s*/{s/.*SV_HANDLE_HELP[:=]\s*"\?\s*\(\w\+\)\s*"\?.*/\1/;p;q}' "$file")"
+	case "$help_handling" in
+		self)
+			"$file" help
+			parse_sv_help=0
+			;;
+		sourced)
+			. "$file" "_help_source_"
+			run_option_help=1
+			if [ -n "$SV_HELP" ]; then
+				echo $SV_HELP
+				parse_sv_help=0
+			fi
+			;;
+		"")
+			;;
+		*)
+			echo "unknown help handling $help_handling for subverb $subverb" >&2
+			;;
+	esac
+	if [ $parse_sv_help -gt 0 ]; then
+		sed -ne '/SV_HELP/,/SV_HELP/{/SV_HELP/d;s/^# \?//;p};d' "$file"
+	fi
+	if [ $run_option_help -gt 0 ]; then
+		sv_option_help
 	fi
 }
 
@@ -204,7 +229,13 @@ sv_help() {
 		sv_help_list
 		return
 	fi
-	sv_help_file $1
+	file="${SVEXEC}/$1"
+	[ -f "$file.sh" ] && file="$file.sh"
+	if [ ! -f "$file" ]; then
+		echo no help for $1 found >&2
+		return 1
+	fi
+	sv_help_file $1 "$file"
 }
 
 sv_call_subverb() {

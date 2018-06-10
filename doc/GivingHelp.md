@@ -36,12 +36,35 @@ instead. This should include more detailed information for the user.
 When the default subverb `help` is called with an parameter, the subverb`s 
 help wiil be displayed instead.
 
-This is done by printing the `SV_HELP` declared within that subverb.
+If the subverb provides any help-related tasks, it should contain
+a definition of `SV_HANDLE_HELP`. This can either be a parameter
+definition or a comment. For compiled subverbs, even mentioning
+this within the text section (by defining a appropriate string)
+should be ok.
+
+This might be one of the following:
+
+	SV_HANDLE_HELP=sourced
+	SV_HANDLE_HELP : self
+	# just for subverb: SV_HANDLE_HELP = self
+
+The currently handled values are `self` and `sourced` (and the empty
+string, which is used, when no definition has been made).
+
+Subverbs using the definition `self` will be called with the parameter
+`help` and should handle any help-output by themselve.
+
+For all other defintions, the value of `SV_HELP` declared within the subverb
+is used.
 This can be done either by declaring that variable as an here-text or by
 declaring a comment containing the string `SV_HELP`, providing the help
 string on the following lines and closing with another `SV_HELP`-line.
 The lines between will get one leading hashmark '#' stripped and the
 result is printed to the user.
+`sourced` subverbs can use other computations to define the variable, as
+well. In that case comment would be ignored.
+
+For `sourced` subverbs afterwards, the supported commandline-options will be printed.
 
 ### commandline options ###
 

@@ -1,0 +1,13 @@
+COMMAND=43.sv_help
+SUBVERB=help
+ARGUMENTS=b
+
+define DESCRIPTION
+show subverb self-contained help
+endef
+
+define OUTPUT
+some self-generated help
+endef
+
+include common.mk

@@ -127,6 +127,24 @@ text of the resp. sub-command. Eg.
 
 Be aware, that this currently is parsed only from sourced (.sh) subverbs.
 
+### `SV_HANDLE_HELP` ###
+
+When this isn't set by a subverb, only the `SV_HELP` tag will be evaluated and
+printed during help invocation for a subverb.
+For more sophisticated help generation, the following other values could be
+assigned:
+
+#### sourced ####
+
+will source the subverb, providing the single argument `_help_source_`. If this is
+given, the subverb should return before taken any action apart from providing help
+output and defining variables.
+
+#### self ####
+
+In this case, the subverb will be executed with the parameter `help`. In this
+case the subverb should handle any help-related output.
+
 ### `$<APP>_DESCRIPTION` ###
 
 If this is set (via a wrapper-script or using `subverb-pre.sh`, the corresponding will
