@@ -1,0 +1,16 @@
+COMMAND=06.sv_help
+SUBVERB=list
+
+define DESCRIPTION
+list all subverbs
+endef
+
+define OUTPUT
+a
+b
+bar
+c
+foo
+endef
+
+include common.mk

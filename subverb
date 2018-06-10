@@ -289,6 +289,10 @@ sv_call_subverb() {
 		if [ "$SVCMD" == "help" ]; then
 			sv_help "$@"
 			return
+		elif [ "$SVCMD" == "list" ]; then
+			sv_group_cmds
+			for grp in "${!SV_GROUP_CMDS[@]}"; do echo "${SV_GROUP_CMDS[$grp]}" | sed -e 's/,/\n/g'; done | grep -ve '^$' | sort -u
+			return
 		fi
 		cat 1>&2 <<ERR
 subcommand ${SVCMD} isn't known.

@@ -20,3 +20,8 @@ This will change the path, where subverbs are looked for permanently
 for that single application.
 Care has to be taken, not to alter the name, the application is called
 as, as this is the source for looking up different pathes and files.
+
+## listing installed subverbs ##
+
+To list all subverbs, the current application can utilize, the builtin
+subverb `list` can be used.
