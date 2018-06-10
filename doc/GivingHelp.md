@@ -26,6 +26,10 @@ via an here-document.
 After that main description, a list of known subverbs is generated
 and printed grouped by their `$SV_GROUP` specifications.
 
+Finally, for a extensive application description, `doc/<application>/HELP.md`
+is printed, if that file isn't found, `doc/<application>/README.md` is used
+instead. This should include more detailed information for the user.
+
 ### Subverb-specific messages ###
 
 When the default subverb `help` is called with an parameter, the subverb`s 

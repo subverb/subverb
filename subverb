@@ -123,6 +123,15 @@ sv_group_cmds() {
 	done
 }
 
+_sv_print_docfile() {
+	file="$(sv_default_dir doc)/$1"
+	if [ ! -f $file ]; then
+		return 1
+	fi
+	echo
+	cat $file
+}
+
 sv_help_list() {
 	declare -nr DESCVAR="${SVBASEUC}_DESCRIPTION"
 	if [ -n "${DESCVAR}" ]; then
@@ -135,6 +144,7 @@ sv_help_list() {
 		echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/\n/g' | sort | column
 		echo
 	done
+	_sv_print_docfile HELP.md || _sv_print_docfile README.md
 }
 
 sv_help_file() {
