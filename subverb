@@ -222,6 +222,7 @@ sv_help_file() {
 	if [ $run_option_help -gt 0 ]; then
 		sv_option_help
 	fi
+	_sv_print_docfile ${SVBASE}-${subverb}.md || _sv_print_docfile ${subverb}.md
 }
 
 sv_help() {

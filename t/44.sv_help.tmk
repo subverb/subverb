@@ -1,0 +1,16 @@
+COMMAND=44.sv_help
+SUBVERB=help
+ARGUMENTS=foo
+
+define DESCRIPTION
+show subverb external help-files
+endef
+
+define OUTPUT
+
+## some help for subverb foobar ##
+
+might go on here.
+endef
+
+include common.mk

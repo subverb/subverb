@@ -66,6 +66,10 @@ well. In that case comment would be ignored.
 
 For `sourced` subverbs afterwards, the supported commandline-options will be printed.
 
+In any case, a help-file in the doc-folder can be generated. This must be
+named like the `<subverb>.md` (optionally `<app>-<subverb>.md`), which will be displayed
+after the aforementioned text has been generated.
+
 ### commandline options ###
 
 Commandline options can be specified by [[Variables|$SV_OPTION and $SV_SHORT_OPTION]].
