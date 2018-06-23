@@ -1,8 +1,9 @@
-COMMAND=40.sv_help
+COMMAND=45.sv_help
 SUBVERB=help
+ARGUMENTS=--long
 
 define DESCRIPTION
-list available sub-commands (grouped)
+list available sub-commands (grouped) with long help
 endef
 
 define OUTPUT
@@ -19,6 +20,10 @@ Supported global options:
 	--bar, -b	help for flag BAR
 	--bla <param>	help for long-option BLA
 	--foo, -f <param>	help for option FOO
+
+## show simple help ##
+
+This helptext should be shown during test.
 endef
 
 include common.mk

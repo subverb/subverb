@@ -14,6 +14,15 @@ The following lines will describe that function's behaviour.
 Any implementation of a subverb called `help` will overwrite
 these.
 
+#### Calling help ####
+
+When the `help` subverb (or more exaclty `sv_help()` is called,
+the following options are supported:
+
+* `--long` will set [[Variables|$SVH_LONG]] to enable long help-texts.
+
+#### Creating help-texts ####
+
 A short description, of what the application is meant to be for
 can be given by declaring [[Variables|$<SV>_DESCRIPTION]], for
 example within a wrapper or via the applications `subverb-pre.sh`
@@ -27,8 +36,9 @@ After that main description, a list of known subverbs is generated
 and printed grouped by their `$SV_GROUP` specifications.
 This list will be followed by the supported global commandline options.
 
-Finally, for a extensive application description, `doc/<application>/HELP.md`
-is printed, if that file isn't found, `doc/<application>/README.md` is used
+Finally, when `$SVH_LONG` is set, an extensive application description, 
+can be displayed from `doc/<application>/HELP.md` - 
+if that file isn't found, `doc/<application>/README.md` is used
 instead. This should include more detailed information for the user.
 
 ### Subverb-specific messages ###

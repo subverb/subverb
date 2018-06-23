@@ -188,7 +188,9 @@ sv_help_list() {
 		echo
 	done
 	sv_option_help "Supported global options:"
-	_sv_print_docfile HELP.md || _sv_print_docfile README.md
+	if [ $SVH_LONG -gt 0 ]; then
+		_sv_print_docfile HELP.md || _sv_print_docfile README.md
+	fi
 }
 
 sv_help_file() {
@@ -222,10 +224,22 @@ sv_help_file() {
 	if [ $run_option_help -gt 0 ]; then
 		sv_option_help
 	fi
-	_sv_print_docfile ${SVBASE}-${subverb}.md || _sv_print_docfile ${subverb}.md
+	if [ $SVH_LONG -gt 0 ]; then
+		_sv_print_docfile ${SVBASE}-${subverb}.md || _sv_print_docfile ${subverb}.md
+	fi
 }
 
 sv_help() {
+	declare -xi SVH_LONG=0
+	declare -a params
+	for param in "$@"; do
+		case "$param" in
+			--long) SVH_LONG=1;;
+			*) params+=($param);;
+		esac
+	done
+	set -- "${params[@]}"
+
 	if [ "$#" -le 0 ]; then
 		sv_help_list
 		return

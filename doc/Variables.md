@@ -150,3 +150,9 @@ case the subverb should handle any help-related output.
 If this is set (via a wrapper-script or using `subverb-pre.sh`, the corresponding will
 be printed as a (short) description, of what the application is used to, when
 printing the [[GivingHelp|help-text]].
+
+### `$SVH_LONG` (read-only) ###
+
+This variable is set by `sv_help()`, when a long help description should be generated.
+Outside of that call, this variable is undefined.
+
