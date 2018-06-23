@@ -7,7 +7,8 @@ show help-text from comment
 endef
 
 define OUTPUT
-just a test help text
+sv_help-a - just a test help text
+
 endef
 
 include common.mk

@@ -7,7 +7,7 @@ list available sub-commands (grouped) with long help
 endef
 
 define OUTPUT
-short help text
+sv_help - short help text
 
 Available init subcommands:
 a	b	c

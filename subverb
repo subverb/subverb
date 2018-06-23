@@ -149,6 +149,17 @@ sv_append_arrval() {
 	fi
 }
 
+_sv_help_printtitle() {
+	declare name=$1
+	declare shortdesc=$2
+	if [ -n "$shortdesc" ]; then
+		cat <<PLAIN_HEADER
+$name - $shortdesc
+
+PLAIN_HEADER
+	fi
+}
+
 sv_option_help() {
 	declare cmd="$1"
 	declare desc="${2:-"Supported options:"}"
@@ -179,10 +190,7 @@ sv_option_help() {
 
 sv_help_list() {
 	declare -nr DESCVAR="${SVBASEUC}_DESCRIPTION"
-	if [ -n "${DESCVAR}" ]; then
-		echo "${DESCVAR}"
-		echo
-	fi
+	_sv_help_printtitle ${SVBASE} "${DESCVAR}"
 	sv_group_cmds
 	for grp in "${!SV_GROUP_CMDS[@]}"; do
 		echo "Available $grp subcommands:"
@@ -210,7 +218,7 @@ sv_help_file() {
 			. "$file" "_help_source_"
 			run_option_help=1
 			if [ -n "$SV_HELP" ]; then
-				echo $SV_HELP
+				_sv_help_printtitle ${SVBASE}-${subverb} "$SV_HELP"
 				parse_sv_help=0
 			fi
 			;;
@@ -221,7 +229,7 @@ sv_help_file() {
 			;;
 	esac
 	if [ $parse_sv_help -gt 0 ]; then
-		sed -ne '/SV_HELP/,/SV_HELP/{/SV_HELP/d;s/^# \?//;p};d' "$file"
+		_sv_help_printtitle ${SVBASE}-${subverb} "$(sed -ne '/SV_HELP/,/SV_HELP/{/SV_HELP/d;s/^# \?//;p};d' "$file")"
 	fi
 	if [ $run_option_help -gt 0 ]; then
 		sv_option_help "$SVBASE $subverb"
