@@ -1,6 +1,6 @@
 COMMAND=44.sv_help
 SUBVERB=help
-ARGUMENTS=foo
+ARGUMENTS=foo --long
 
 define DESCRIPTION
 show subverb external help-files
