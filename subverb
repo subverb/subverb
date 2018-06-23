@@ -150,6 +150,7 @@ sv_append_arrval() {
 }
 
 sv_option_help() {
+	declare desc="${1:-"Supported options:"}"
 	declare -A help_option
 	for opt in "${!SV_OPTION[@]}"; do
 		sv_append_arrval help_option ${SV_OPTION[$opt]} "--$opt" ", "
@@ -162,16 +163,16 @@ sv_option_help() {
 		return
 	fi
 
-	echo ${1:-"Supported options:"}
 	varsort=($(sv_sort "${!help_option[@]}"))
+	echo $desc
 	for var in "${varsort[@]}"; do
-		echo -en "\t${help_option[$var]}"
+		declare vardesc="${help_option[$var]}"
 		if [ "${var:0:1}" == ":" ]; then
 			var=${var:1}
 		else
-			echo -n " <param>"
+			vardesc="${vardesc} <param>"
 		fi
-		echo -e "\t${SV_OPTION_HELP[$var]}"
+		echo -e "\t${vardesc}\t${SV_OPTION_HELP[$var]}"
 	done
 }
 
