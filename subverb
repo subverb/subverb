@@ -150,7 +150,8 @@ sv_append_arrval() {
 }
 
 sv_option_help() {
-	declare desc="${1:-"Supported options:"}"
+	declare cmd="$1"
+	declare desc="${2:-"Supported options:"}"
 	declare -A help_option
 	for opt in "${!SV_OPTION[@]}"; do
 		sv_append_arrval help_option ${SV_OPTION[$opt]} "--$opt" ", "
@@ -188,7 +189,7 @@ sv_help_list() {
 		echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/\n/g' | sort | column
 		echo
 	done
-	sv_option_help "Supported global options:"
+	sv_option_help $SVBASE "Supported global options:"
 	if [ $SVH_LONG -gt 0 ]; then
 		_sv_print_docfile HELP.md || _sv_print_docfile README.md
 	fi
@@ -223,7 +224,7 @@ sv_help_file() {
 		sed -ne '/SV_HELP/,/SV_HELP/{/SV_HELP/d;s/^# \?//;p};d' "$file"
 	fi
 	if [ $run_option_help -gt 0 ]; then
-		sv_option_help
+		sv_option_help "$SVBASE $subverb"
 	fi
 	if [ $SVH_LONG -gt 0 ]; then
 		_sv_print_docfile ${SVBASE}-${subverb}.md || _sv_print_docfile ${subverb}.md

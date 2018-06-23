@@ -82,7 +82,7 @@ If a parameter is given, the help for the corresponding submodule
 should be displayed. This will be received by the
 HERE-text [[Variables|$SV_HELP]].
 
-## `sv_option_help ["headline"]` - generate an option-help text ##
+## `sv_option_help "$cmd" ["headline"]` - generate an option-help text ##
 
 all options currently set up via [[Variables|$SV_OPTION, $SV_SHORT_OPTION and $SV_OPTION_HELP]]
 will be searched and for each option a corresponding help-text
