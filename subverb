@@ -160,6 +160,19 @@ PLAIN_HEADER
 	fi
 }
 
+_sv_help_printcmds() {
+	sv_group_cmds
+	if [ "${#SV_GROUP_CMDS[@]}" -le 0 ]; then
+		return
+	fi
+	for grp in "${!SV_GROUP_CMDS[@]}"; do
+		echo "Available $grp subcommands:"
+		echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/\n/g' | sort | column
+		echo
+	done
+
+}
+
 sv_option_help() {
 	declare cmd="$1"
 	declare desc="${2:-"Supported options:"}"
@@ -191,12 +204,7 @@ sv_option_help() {
 sv_help_list() {
 	declare -nr DESCVAR="${SVBASEUC}_DESCRIPTION"
 	_sv_help_printtitle ${SVBASE} "${DESCVAR}"
-	sv_group_cmds
-	for grp in "${!SV_GROUP_CMDS[@]}"; do
-		echo "Available $grp subcommands:"
-		echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/\n/g' | sort | column
-		echo
-	done
+	_sv_help_printcmds
 	sv_option_help $SVBASE "Supported global options:"
 	if [ $SVH_LONG -gt 0 ]; then
 		_sv_print_docfile HELP.md || _sv_print_docfile README.md
