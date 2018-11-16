@@ -176,3 +176,10 @@ Outside of that call, this variable is undefined.
 
 This variable may contain pointers to furhter documents (or man-pages) which are
 related to the current application.
+
+### `$MD2MAN` ###
+
+This should be set to the tool, used to generate manpage/roff output from
+Markdown files. By default `pandoc` is used. The command is appended by the filename
+of the markdown-file to convert and should the generated roff on stdout.
+
