@@ -180,16 +180,71 @@ MAN_HEADER
 	esac
 }
 
+_sv_longest() {
+	declare -i len=0
+	for vrb in "$@"; do
+		if [ ${#vrb} -gt $len ]; then
+			len=${#vrb}
+		fi
+	done
+	return $len
+}
+
+_sv_print_multiple() {
+	declare -i nr=$1
+	shift
+	for ((cnt=0;cnt<$nr;cnt++)); do
+		echo -n "$@"
+	done
+}
+
+_sv_print_cols() {
+	declare -i cnt=0
+	declare -i cols=$1
+	declare sep=$2
+	shift 2
+	for item in "$@"; do
+		echo -n "$item$sep"
+		cnt+=1
+		if [ $[$cnt % $cols] -eq 0 ]; then
+			echo
+		fi
+	done
+	if [ $[$cnt % $cols] -ne 0 ]; then
+		echo
+	fi
+}
+
 _sv_help_printcmds() {
 	sv_group_cmds
 	if [ "${#SV_GROUP_CMDS[@]}" -le 0 ]; then
 		return
 	fi
 	for grp in "${!SV_GROUP_CMDS[@]}"; do
-		echo "Available $grp subcommands:"
-		echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/\n/g' | sort | column
-		echo
+		SVH_SEE_ALSO+=($(echo ${SV_GROUP_CMDS[$grp]} | sed -e "s/,/ /g;s/\\(^\\| \\)/&${SVBASE}-/g;s/\\( \\|\$\\)/(1)&/g;s/${SVBASE}-(1)//"))
 	done
+	case "$SVH_FORMAT" in
+		plain)
+			for grp in "${!SV_GROUP_CMDS[@]}"; do
+				echo "Available $grp subcommands:"
+				echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/\n/g' | sort | column
+				echo
+			done
+			;;
+		man)
+			echo ".SH MODES"
+			for grp in "${!SV_GROUP_CMDS[@]}"; do
+				declare -a cmds=($(echo ${SV_GROUP_CMDS[$grp]} | sed -e 's/,/ /g' | sort ))
+				echo ".SS \"Available $grp subcommands:\""
+				echo ".TS"
+				_sv_longest "${cmds[@]}"
+				declare -i cols=$[80/($?+2)]
+				_sv_print_multiple $cols L; echo .
+				_sv_print_cols $cols "	" "${cmds[@]}"
+				echo ".TE"
+			done
+			;;
+	esac
 
 }
 
