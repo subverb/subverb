@@ -260,11 +260,30 @@ sv_option_help() {
 	done
 
 	if [ -z "${!help_option[*]}" ]; then
+		if [ "$SVH_FORMAT" = "man" ]; then
+			echo ".SH DESCRIPTION"
+		fi
 		return
 	fi
 
 	varsort=($(sv_sort "${!help_option[@]}"))
-	echo $desc
+	case "$SVH_FORMAT" in
+		plain) echo $desc;;
+		man)
+			echo ".SH SYNOPSIS"
+			echo -n "\\fB$cmd\\fP "
+			for var in "${varsort}"; do
+				echo -n "["
+				echo -n ${help_option[$var]} | sed -e 's/,/ | /g'
+				[ "${var:0:1}" == ":" ] && echo -n " \\fI<param>\\fP"
+				echo -n "] "
+			done
+			echo
+			echo ".SH DESCRIPTION"
+			echo ".SS $desc"
+			;;
+	esac
+
 	for var in "${varsort[@]}"; do
 		declare vardesc="${help_option[$var]}"
 		if [ "${var:0:1}" == ":" ]; then
