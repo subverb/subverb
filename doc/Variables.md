@@ -156,3 +156,11 @@ printing the [[GivingHelp|help-text]].
 This variable is set by `sv_help()`, when a long help description should be generated.
 Outside of that call, this variable is undefined.
 
+### `$SVH_FORMAT` (read-only) ###
+
+This variable is set by `sv_help()`, to the name of the current output-format.
+The currently known values include:
+* plain
+* man
+Outside of that call, this variable is undefined.
+

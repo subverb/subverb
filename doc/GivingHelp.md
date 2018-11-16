@@ -20,6 +20,8 @@ When the `help` subverb (or more exaclty `sv_help()` is called,
 the following options are supported:
 
 * `--long` will set [[Variables|$SVH_LONG]] to enable long help-texts.
+* `--man` can be used to create man-pages. This will set `$SVH_LONG`
+and `$SVH_FORMAT` accordingly.
 
 #### Creating help-texts ####
 

@@ -248,11 +248,13 @@ sv_help_file() {
 }
 
 sv_help() {
+	declare -xl SVH_FORMAT=plain
 	declare -xi SVH_LONG=0
 	declare -a params
 	for param in "$@"; do
 		case "$param" in
 			--long) SVH_LONG=1;;
+			--man) SVH_FORMAT=man; SVH_LONG=1;;
 			*) params+=($param);;
 		esac
 	done
