@@ -262,6 +262,24 @@ _sv_help_print_also() {
 	esac
 }
 
+_sv_help_author_copyright() {
+	if [ -z "${SVH_AUTHOR}" -a -z "${SVH_LICENSE}" ]; then
+		return
+	fi
+	case "$SVH_FORMAT" in
+		plain) ;;
+		man)
+			echo ".SH AUTHOR"
+			if [ -n "${SVH_AUTHOR}" ]; then
+				echo -n "(C) $(date +"%Y") by ${SVH_AUTHOR}"
+			fi
+			if [ -n "${SVH_LICENSE}" ]; then
+				echo -n "licensed under the terms of ${SVH_LICENSE}"
+			fi
+			;;
+	esac
+}
+
 sv_option_help() {
 	declare cmd="$1"
 	declare desc="${2:-"Supported options:"}"
@@ -325,6 +343,7 @@ sv_help_list() {
 	if [ $SVH_LONG -gt 0 ]; then
 		_sv_print_docfile HELP.md || _sv_print_docfile README.md
 		_sv_help_print_also
+		_sv_help_author_copyright
 	fi
 }
 
@@ -362,6 +381,7 @@ sv_help_file() {
 	if [ $SVH_LONG -gt 0 ]; then
 		_sv_print_docfile ${SVBASE}-${subverb}.md || _sv_print_docfile ${subverb}.md
 		_sv_help_print_also
+		_sv_help_author_copyright
 	fi
 }
 

@@ -151,6 +151,14 @@ If this is set (via a wrapper-script or using `subverb-pre.sh`, the correspondin
 be printed as a (short) description, of what the application is used to, when
 printing the [[GivingHelp|help-text]].
 
+### `$SVH_AUTHOR` ###
+
+This variable should be set to the author of the application. Used in the [[GivingHelp|help-text]]
+
+### `$SVH_LICENSE` ###
+
+Should be set to the applications license.
+
 ### `$SVH_LONG` (read-only) ###
 
 This variable is set by `sv_help()`, when a long help description should be generated.
