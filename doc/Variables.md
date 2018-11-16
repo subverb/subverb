@@ -164,3 +164,7 @@ The currently known values include:
 * man
 Outside of that call, this variable is undefined.
 
+### `$SVH_SEE_ALSO` ###
+
+This variable may contain pointers to furhter documents (or man-pages) which are
+related to the current application.

@@ -10,6 +10,7 @@ declare -gA SV_SHORT_OPTION
 declare -gA SV_OPTION_HELP
 declare -g SV_AUTO_OPTIONS
 declare -g MD2MAN=${MD2MAN:-pandoc -f markdown -t man}
+declare -ga SVH_SEE_ALSO
 
 case "${SVBASEDIR}" in
 	"")
@@ -248,6 +249,19 @@ _sv_help_printcmds() {
 
 }
 
+_sv_help_print_also() {
+	if [ ${#SVH_SEE_ALSO[@]} -le 0 ]; then
+		return
+	fi
+	case "$SVH_FORMAT" in
+		plain) ;;
+		man)
+			echo ".SH \"SEE ALSO\""
+			sv_sort "${SVH_SEE_ALSO[@]}" | uniq | sed -e 's/$/,/;$s/,$//;'
+			;;
+	esac
+}
+
 sv_option_help() {
 	declare cmd="$1"
 	declare desc="${2:-"Supported options:"}"
@@ -310,6 +324,7 @@ sv_help_list() {
 	sv_option_help $SVBASE "Supported global options:"
 	if [ $SVH_LONG -gt 0 ]; then
 		_sv_print_docfile HELP.md || _sv_print_docfile README.md
+		_sv_help_print_also
 	fi
 }
 
@@ -346,6 +361,7 @@ sv_help_file() {
 	fi
 	if [ $SVH_LONG -gt 0 ]; then
 		_sv_print_docfile ${SVBASE}-${subverb}.md || _sv_print_docfile ${subverb}.md
+		_sv_help_print_also
 	fi
 }
 
