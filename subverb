@@ -160,12 +160,24 @@ sv_append_arrval() {
 _sv_help_printtitle() {
 	declare name=$1
 	declare shortdesc=$2
-	if [ -n "$shortdesc" ]; then
-		cat <<PLAIN_HEADER
+	case "$SVH_FORMAT" in
+		plain)
+			if [ -n "$shortdesc" ]; then
+				cat <<PLAIN_HEADER
 $name - $shortdesc
 
 PLAIN_HEADER
-	fi
+			fi
+			;;
+		man)
+			SVH_MAN_SECTION=${SVH_MAN_SECTION:-1}
+			cat <<MAN_HEADER
+.TH $(echo $name | tr "a-z -" "A-Z[_*]") ${SVH_MAN_SECTION} "$(LANG=C date +"%d %B %Y")"
+.SH NAME
+$name \\- $shortdesc
+MAN_HEADER
+			;;
+	esac
 }
 
 _sv_help_printcmds() {
