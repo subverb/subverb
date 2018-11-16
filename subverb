@@ -362,6 +362,16 @@ sv_help() {
 	done
 	set -- "${params[@]}"
 
+	declare pager
+	case "$-" in
+		*i*)
+			case "$SVH_FORMAT" in
+				plain)	pager=${PAGER:-less};;
+				man)	pager=man;;
+			esac
+			;;
+	esac
+
 	if [ "$#" -le 0 ]; then
 		sv_help_list
 		return
