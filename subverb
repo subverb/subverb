@@ -291,7 +291,15 @@ sv_option_help() {
 		else
 			vardesc="${vardesc} <param>"
 		fi
-		echo -e "\t${vardesc}\t${SV_OPTION_HELP[$var]}"
+		case "$SVH_FORMAT" in 
+			plain) echo -e "\t${vardesc}\t${SV_OPTION_HELP[$var]}";;
+			man)
+				echo ".TP"
+				echo "\\fB${vardesc}\\fP"
+				echo "${SV_OPTION_HELP[$var]}"
+				echo
+				;;
+		esac
 	done
 }
 
