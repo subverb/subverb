@@ -9,6 +9,7 @@ declare -gA SV_OPTION
 declare -gA SV_SHORT_OPTION
 declare -gA SV_OPTION_HELP
 declare -g SV_AUTO_OPTIONS
+declare -g MD2MAN=${MD2MAN:-pandoc -f markdown -t man}
 
 case "${SVBASEDIR}" in
 	"")
@@ -129,8 +130,15 @@ _sv_print_docfile() {
 	if [ ! -f $file ]; then
 		return 1
 	fi
-	echo
-	cat $file
+	case "$SVH_FORMAT" in
+		plain)
+			echo
+			cat $file
+			;;
+		man)
+			${MD2MAN} $file
+			;;
+	esac
 }
 
 sv_sort() {
