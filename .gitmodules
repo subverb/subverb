@@ -1,0 +1,3 @@
+[submodule "doc"]
+	path = doc
+	url = http://git.dresden.micronet24.de/benjamin/subverb.wiki.git
