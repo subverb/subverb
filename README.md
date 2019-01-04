@@ -1,3 +1,5 @@
+[![pipeline status](https://git.dresden.micronet24.de/benjamin/subverb/badges/master/pipeline.svg)](https://git.dresden.micronet24.de/benjamin/subverb/commits/master)
+
 # simple subverb execution wrapper #
 
 Many commands need support for different subcommands, which can be seen as
