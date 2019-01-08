@@ -4,7 +4,7 @@ subverb (1.0.0+nmu3) UNRELEASED; urgency=medium
   * provide support for multiple backends
   * support documentation generation
 
- -- Benjamin Tietz <benjamin@dresden.micronet24.de> Tue, 8 Jan 2019 15:50:12 +0200
+ -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Tue, 8 Jan 2019 15:50:12 +0200
 
 subverb (1.0.0+nmu2) UNRELEASED; urgency=medium
 

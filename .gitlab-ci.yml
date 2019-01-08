@@ -9,7 +9,7 @@ debian_test:
   script: 
     - rm -f *.{deb,dsc,changes}
     - dpkg-buildpackage --no-sign
-    - mv ../subverb_*.{deb,dsc,changes} .
+    - mv ../subverb*.{deb,dsc,changes} .
   artifacts:
     paths: 
       - "*.deb"
@@ -22,10 +22,10 @@ debian_test:
 debian_upload:
   stage: deploy
   script:
-    - rm ../subverb_*.{deb,dsc,changes}
+    - rm ../subverb*.{deb,dsc,changes}
     - dpkg-buildpackage
-    - reprepro includedeb experimental ../subverb_*.deb
-    - reprepro includedsc experimental ../subverb_*.dsc
+    - reprepro includedeb experimental ../subverb*.deb
+    - reprepro includedsc experimental ../subverb*.dsc
   only:
     - master
   when: manual
