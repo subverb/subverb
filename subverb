@@ -485,6 +485,23 @@ ERR
 	fi
 }
 
+_sv_init_backends() {
+	if [ -n "$_SVB_BACKENDS" ]; then
+		return 0
+	fi
+	declare -g -a _SVB_BACKENDS
+	_SVB_BACKENDS=($(
+		for i in $(sv_default_dir pkglib)/*/.svbackend; do
+			((grep "priority=" $i || echo priority=50) && echo $(basename $(dirname $i))) | sed -e 'N;s/priority\s*=\s*//;s/\n/ /'
+		done | sort -n | awk '{ print $2 ; }'
+	))
+	return 1
+}
+
+sv_backend() {
+	_sv_init_backends
+}
+
 parse_config() {
 	for i in "$@"; do
 		if [ -f "$i" ]; then

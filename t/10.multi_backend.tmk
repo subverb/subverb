@@ -1,0 +1,14 @@
+COMMAND=10.multi_backend
+SUBVERB=list
+
+define DESCRIPTION
+initialize and list all backends (in priority order)
+endef
+
+define OUTPUT
+backendA
+backendC
+backendB
+endef
+
+include common.mk
