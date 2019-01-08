@@ -502,7 +502,7 @@ _sv_init_backends() {
 sv_backend() {
 	_sv_init_backends
 	local -A SV_SHORT_OPTION
-	local -A SV_OPTION=([all]=:SVB_ALL [one]=:SVB_ONE)
+	local -A SV_OPTION=([all]=:SVB_ALL [one]=:SVB_ONE [mandatory]=:SVB_MANDATORY [optional]=:SVB_OPTIONAL)
 	sv_parse_options "$@"
 	_SVB_CMD=${SV_UNPARSED[0]}
 	if [ -z "$_SVB_CMD" ]; then
@@ -513,9 +513,12 @@ sv_backend() {
 			if ! [ -n "$SVB_ALL" ]; then
 				return 0
 			fi
+		elif ! [ -n "$SVB_MANDATORY" ]; then
+			echo "Backend $backend doesn't implement mandatory $_SVB_CMD!" 1>&2
 		fi
 	done
-	[ -n "$SVB_ALL" ] && return 0
+	[ -n "$SVB_ALL" -o -n "$SVB_OPTIONAL" ] && return 0
+	echo "No Backend implements $_SVB_CMD!" 1>&2
 	return 1
 }
 
