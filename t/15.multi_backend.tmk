@@ -1,0 +1,12 @@
+COMMAND=15.multi_backend
+SUBVERB=backend
+
+define DESCRIPTION
+call the a specific's backend implementation
+endef
+
+define OUTPUT
+BackendB:one
+endef
+
+include common.mk
