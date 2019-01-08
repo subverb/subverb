@@ -469,7 +469,7 @@ sv_call_subverb() {
 	fi
 
 	if ! sv_call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
-		if [ "$SVCMD" == "help" ]; then
+		if [ "$SVCMD" == "help" -o "$SVCMD" == "--help" ]; then
 			sv_help "$@"
 			return
 		elif [ "$SVCMD" == "list" ]; then
