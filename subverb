@@ -491,11 +491,31 @@ _sv_init_backends() {
 	fi
 	declare -g _SVB_DIR=$(sv_default_dir pkglib)
 	declare -g -a _SVB_BACKENDS
+	declare -A _SVB_DEPENDENCIES
 	_SVB_BACKENDS=($(
 		for i in $_SVB_DIR/*/.svbackend; do
-			((grep "priority=" $i || echo priority=50) && echo $(basename $(dirname $i))) | sed -e 'N;s/priority\s*=\s*//;s/\n/ /'
+			backend=$(basename $(dirname $i))
+			_SVB_DEPENDENCIES[$backend]="$backend $(grep "depends=" $i | sed -e 's/depends=//')"
+			((grep "priority=" $i || echo priority=50) && echo $backend) | sed -e 'N;s/priority\s*=\s*//;s/\n/ /'
 		done | sort -n | awk '{ print $2 ; }'
 	))
+	for backend in ${!_SVB_DEPENDENCIES}; do
+		for dep in ${_SVB_DEPENDENCIES[$backend]}; do
+			if [ -z "${_SVB_DEPENDENCIES[$dep]}" ]; then
+				echo "Backend $backend depends on $dep, which is not found" 2>&1
+				idx=0
+				for b in "${_SVB_BACKENDS[@]}"; do
+					if [ "$b" == "$backend" ]; then
+						unset $_SVB_BACKENDS[$idx]
+						break
+					else
+						$idx++
+					fi
+				done
+				break
+			fi
+		done
+	done
 	return 1
 }
 
