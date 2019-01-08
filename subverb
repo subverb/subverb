@@ -616,7 +616,7 @@ sv_default_dir() {
 			sv_evaldir SYSCONFIG ${SVBASECONFDIR} ${SVBASE}
 			;;
 		doc)
-			sv_evaldir SHARED_DIR ${SVBASESHAREDIR} doc/${SVBASE}
+			sv_evaldir DOC_DIR ${SVBASESHAREDIR} doc/${SVBASE}
 			;;
 		*)
 			echo "unknown dir-class $1" 1>&2
