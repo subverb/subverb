@@ -1,0 +1,12 @@
+COMMAND=13.multi_backend
+SUBVERB=one_specific
+
+define DESCRIPTION
+call a multi-backend subverb with different name
+endef
+
+define OUTPUT
+BackendA:all
+endef
+
+include common.mk
