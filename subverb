@@ -501,6 +501,12 @@ _sv_init_backends() {
 
 sv_backend() {
 	_sv_init_backends
+	for backend in "${_SVB_BACKENDS[@]}"; do
+		if sv_call "$_SVB_DIR/$backend/$SVCMD"; then
+			return 0
+		fi
+	done
+	return 1
 }
 
 parse_config() {
