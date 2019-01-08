@@ -501,11 +501,17 @@ _sv_init_backends() {
 
 sv_backend() {
 	_sv_init_backends
+	local -A SV_SHORT_OPTION
+	local -A SV_OPTION=([all]=:SVB_ALL [one]=:SVB_ONE)
+	sv_parse_options "$@"
 	for backend in "${_SVB_BACKENDS[@]}"; do
 		if sv_call "$_SVB_DIR/$backend/$SVCMD"; then
-			return 0
+			if ! [ -n "$SVB_ALL" ]; then
+				return 0
+			fi
 		fi
 	done
+	[ -n "$SVB_ALL" ] && return 0
 	return 1
 }
 
