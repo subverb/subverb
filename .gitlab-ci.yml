@@ -7,15 +7,15 @@ test:
 debian_test:
   stage: deploy
   script: 
-    - rm -f *.{deb,dsc,changes}
+#    - rm -f *.{deb,dsc,changes}
     - dpkg-buildpackage --no-sign
-    - mv ../subverb*.{deb,dsc,changes} .
-  artifacts:
-    paths: 
-      - "*.deb"
-      - "*.dsc"
-      - "*.changes"
-    when: on_success
+#    - mv ../subverb*.{deb,dsc,changes} .
+#  artifacts:
+#    paths: 
+#      - "*.deb"
+#      - "*.dsc"
+#      - "*.changes"
+#    when: on_success
   only:
     - master
 
