@@ -1,2 +1,2 @@
 _sv_init_backends
-echo "${_SVB_BACKENDS[*]}"
+for i in "${_SVB_BACKENDS[@]}"; do echo $i; done
