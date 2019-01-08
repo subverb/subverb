@@ -422,7 +422,7 @@ sv_help() {
 }
 
 sv_call_subverb() {
-	SVCMD=${1:-"help"}
+	declare -g SVCMD=${1:-"help"}
 	shift
 	declare -a EXARGV=("$@")
 
