@@ -525,26 +525,31 @@ sv_backend() {
 	local -A SV_OPTION=(
 			[all]=:SVB_ALL [one]=:SVB_ONE
 			[backend]=SVB_BACKEND
-			[mandatory]=:SVB_MANDATORY [optional]=:SVB_OPTIONALi
+			[first]=:SVB_FIRST
+			[mandatory]=:SVB_MANDATORY [optional]=:SVB_OPTIONAL
 			)
 	sv_parse_options "$@"
 	_SVB_CMD=${SV_UNPARSED[0]}
 	if [ -z "$_SVB_CMD" ]; then
 		_SVB_CMD=$SVCMD
 	fi
+
+	_SVB_RUN=0
 	for backend in "${_SVB_BACKENDS[@]}"; do
 		if [ -n "$SVB_BACKEND" -a "$SVB_BACKEND" != "$backend" ]; then
 			continue
 		fi
 		if sv_call "$_SVB_DIR/$backend/$_SVB_CMD"; then
-			if ! [ -n "$SVB_ALL" ]; then
-				return 0
-			fi
+			_SVB_RUN=1
+			[ -n "$SVB_ALL" ] && continue
+			[ -n "$SVB_FIRST" -a $RVAL -ne 0 ] && continue
+			return 0
 		elif ! [ -n "$SVB_MANDATORY" ]; then
 			echo "Backend $backend doesn't implement mandatory $_SVB_CMD!" 1>&2
 		fi
 	done
 	[ -n "$SVB_ALL" -o -n "$SVB_OPTIONAL" ] && return 0
+	[ -n "$SVB_FIRST" -a $_SVB_RUN -gt 0 ] && return 1
 	echo "No Backend implements $_SVB_CMD!" 1>&2
 	return 1
 }
