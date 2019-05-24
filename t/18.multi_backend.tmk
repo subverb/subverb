@@ -1,0 +1,12 @@
+COMMAND=18.multi_backend
+SUBVERB=taskgroup
+
+define DESCRIPTION
+use a multi-backend task-group
+endef
+
+define OUTPUT
+task-BackendA:all
+endef
+
+include common.mk

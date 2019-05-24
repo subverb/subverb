@@ -526,6 +526,7 @@ sv_backend() {
 	local -A SV_OPTION=(
 			[all]=:SVB_ALL [one]=:SVB_ONE
 			[backend]=SVB_BACKEND
+			[group]=SVB_GROUP
 			[first]=:SVB_FIRST
 			[mandatory]=:SVB_MANDATORY [optional]=:SVB_OPTIONAL
 			)
@@ -538,6 +539,7 @@ sv_backend() {
 	# local'ing all options - needed for recursive calls
 	local _SVB_ALL=$SVB_ALL
 	local _SVB_ONE=$SVB_ONE
+	local _SVB_GROUP=$SVB_GROUP
 	local _SVB_BACKEND=$SVB_BACKEND
 	local _SVB_FIRST=$SVB_FIRST
 	local _SVB_MANDATORY=$SVB_MANDATORY
@@ -548,6 +550,15 @@ sv_backend() {
 		_SVB_BACKEND="${SVB_GROUP}_${SVB_BACKEND}"
 	fi
 	for backend in "${_SVB_BACKENDS[@]}"; do
+		if [ -n "$_SVB_GROUP" ]; then
+			case "$backend" in
+				${_SVB_GROUP}-*)
+					;;
+				*)
+					continue
+					;;
+			esac
+		fi
 		if [ -n "$_SVB_BACKEND" -a "$_SVB_BACKEND" != "$backend" ]; then
 			continue
 		fi
