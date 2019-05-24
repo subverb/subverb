@@ -1,0 +1,14 @@
+COMMAND=17.multi_backend
+SUBVERB=recursive
+
+define DESCRIPTION
+call recusive multi-backend subverb
+endef
+
+define OUTPUT
+BackendC:recursive
+BackendA:all
+BackendB:recursive(NOP)
+endef
+
+include common.mk

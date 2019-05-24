@@ -530,27 +530,38 @@ sv_backend() {
 			[mandatory]=:SVB_MANDATORY [optional]=:SVB_OPTIONAL
 			)
 	sv_parse_options "$@"
-	_SVB_CMD=${SV_UNPARSED[0]}
+	local _SVB_CMD=${SV_UNPARSED[0]}
 	if [ -z "$_SVB_CMD" ]; then
 		_SVB_CMD=$SVCMD
 	fi
 
-	_SVB_RUN=0
+	# local'ing all options - needed for recursive calls
+	local _SVB_ALL=$SVB_ALL
+	local _SVB_ONE=$SVB_ONE
+	local _SVB_BACKEND=$SVB_BACKEND
+	local _SVB_FIRST=$SVB_FIRST
+	local _SVB_MANDATORY=$SVB_MANDATORY
+	local _SVB_OPTIONAL=$SVB_OPTIONAL
+
+	local _SVB_RUN=0
+	if [ -n "$SVB_GROUP" -a -n "$SVB_BACKEND" ]; then
+		_SVB_BACKEND="${SVB_GROUP}_${SVB_BACKEND}"
+	fi
 	for backend in "${_SVB_BACKENDS[@]}"; do
-		if [ -n "$SVB_BACKEND" -a "$SVB_BACKEND" != "$backend" ]; then
+		if [ -n "$_SVB_BACKEND" -a "$_SVB_BACKEND" != "$backend" ]; then
 			continue
 		fi
 		if sv_call "$_SVB_DIR/$backend/$_SVB_CMD"; then
 			_SVB_RUN=1
-			[ -n "$SVB_ALL" ] && continue
-			[ -n "$SVB_FIRST" -a $RVAL -ne 0 ] && continue
+			[ -n "$_SVB_ALL" ] && continue
+			[ -n "$_SVB_FIRST" -a $RVAL -ne 0 ] && continue
 			return 0
-		elif ! [ -n "$SVB_MANDATORY" ]; then
+		elif ! [ -n "$_SVB_MANDATORY" ]; then
 			echo "Backend $backend doesn't implement mandatory $_SVB_CMD!" 1>&2
 		fi
 	done
-	[ -n "$SVB_ALL" -o -n "$SVB_OPTIONAL" ] && return 0
-	[ -n "$SVB_FIRST" -a $_SVB_RUN -gt 0 ] && return 1
+	[ -n "$_SVB_ALL" -o -n "$_SVB_OPTIONAL" ] && return 0
+	[ -n "$_SVB_FIRST" -a $_SVB_RUN -gt 0 ] && return 1
 	echo "No Backend implements $_SVB_CMD!" 1>&2
 	return 1
 }
