@@ -8,6 +8,7 @@ endef
 define OUTPUT
 BackendA:all
 BackendB:all
+task-BackendA:all
 endef
 
 include common.mk

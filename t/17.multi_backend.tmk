@@ -1,17 +1,14 @@
 COMMAND=17.multi_backend
-SUBVERB=parameter
+SUBVERB=recursive
 
 define DESCRIPTION
-call multi-backend subverbs with cmdline-parameters
+call recusive multi-backend subverb
 endef
 
 define OUTPUT
-BackendA:parameter foo bar
-BackendB:parameter foo bar
-BackendA:parameter
-BackendB:parameter
-BackendA:parameter
-BackendB:parameter
+BackendC:recursive
+BackendA:all
+BackendB:recursive(NOP)
 endef
 
 include common.mk

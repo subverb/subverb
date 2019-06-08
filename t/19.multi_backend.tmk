@@ -1,0 +1,17 @@
+COMMAND=19.multi_backend
+SUBVERB=parameter
+
+define DESCRIPTION
+call multi-backend subverbs with cmdline-parameters
+endef
+
+define OUTPUT
+BackendA:parameter foo bar
+BackendB:parameter foo bar
+BackendA:parameter
+BackendB:parameter
+BackendA:parameter
+BackendB:parameter
+endef
+
+include common.mk
