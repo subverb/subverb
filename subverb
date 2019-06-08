@@ -530,10 +530,17 @@ sv_backend() {
 			[mandatory]=:SVB_MANDATORY [optional]=:SVB_OPTIONAL
 			)
 	sv_parse_options "$@"
+	set -- "${SV_UNPARSED[@]}"
 	_SVB_CMD=${SV_UNPARSED[0]}
-	if [ -z "$_SVB_CMD" ]; then
+	if [ -z "$_SVB_CMD" -o "$_SVB_CMD" == "--" ]; then
 		_SVB_CMD=$SVCMD
 	fi
+	while [ $# -gt 0 -a "$1" != "--" ]; do
+		shift
+	done
+	# shift out the --
+	shift
+	declare -a EXARGV=("$@")
 
 	_SVB_RUN=0
 	for backend in "${_SVB_BACKENDS[@]}"; do
