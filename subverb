@@ -50,8 +50,10 @@ export SVBASESHAREDIR="$SVBASEROOTDIR/share"
 export SVBASELIBDIR="$SVBASEROOTDIR/lib"
 if [ "$SVBASEROOTDIR" = "/usr" ]; then
 	export SVBASECONFDIR=/etc
+	export SVBASECACHEDIR=/var/cache
 else
 	export SVBASECONFDIR="$SVBASEROOTDIR/etc"
+	export SVBASECACHEDIR="$SVBASEROOTDIR/cache"
 fi
 
 sv_evaldir() {
@@ -642,6 +644,9 @@ sv_parse_options() {
 
 sv_default_dir() {
 	case "$1" in
+		cache)
+			sv_evaldir CACHE_DIR ${SVBASECACHEDIR}
+			;;
 		data)
 			sv_evaldir SHARED_DIR ${SVBASESHAREDIR}
 			;;
