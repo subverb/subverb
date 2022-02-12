@@ -1,3 +1,10 @@
+subverb (1.2.0+nmu2) UNRELEASED; urgency=medium
+
+  * local package
+  * add dir-category "cache"
+
+ -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Sat, 12 Feb 2022 11:54:37 +0100
+
 subverb (1.2.0+nmu1) UNRELEASED; urgency=medium
 
   * local package
