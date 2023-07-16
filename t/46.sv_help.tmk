@@ -1,0 +1,18 @@
+COMMAND=46.sv_help
+SUBVERB=c
+ARGUMENTS=--help
+
+define DESCRIPTION
+show help-text for cmdline arguments (poke via verb)
+endef
+
+define OUTPUT
+Supported options:
+	-a <param>	help for short-option A
+	--bar, -b	help for flag BAR
+	--bla <param>	help for long-option BLA
+	--foo, -f <param>	help for option FOO
+	--foobar <param>	help for subverb option FOOBAR
+endef
+
+include common.mk

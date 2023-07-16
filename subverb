@@ -471,6 +471,11 @@ sv_call_subverb() {
 		fi
 	fi
 
+	for arg in "$@"; do if [ $arg == "--help" ]; then
+		sv_help "${SVCMD}" "$@"
+		return
+	fi done
+
 	if ! sv_call "${SVEXEC}/${SVBASE}-${SVCMD}" "${SVEXEC}/${SVCMD}"; then
 		if [ "$SVCMD" == "help" -o "$SVCMD" == "--help" ]; then
 			sv_help "$@"
