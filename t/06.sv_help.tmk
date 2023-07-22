@@ -11,6 +11,8 @@ b
 bar
 c
 foo
+help
+list
 endef
 
 include common.mk

@@ -9,6 +9,9 @@ endef
 define OUTPUT
 sv_help - short help text
 
+Available global subcommands:
+help	list
+
 Available init subcommands:
 a	b	c
 

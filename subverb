@@ -120,11 +120,19 @@ sv_group_cmds() {
 	if [ "${#SV_GROUP_CMDS}" -gt 0 ]; then
 		return
 	fi
+	declare -A _sv_cmds
 	for file in ${SVEXEC}/*; do
 		cmd=$(basename "$file" .sh)
 		group=$(sed -ne '/^[# ]*SV_GROUP[:= ]\s*/{s/.*[A-Z]*[:= ]\s*\([-_.a-zA-Z]*\).*/\1/;p;q}' $file)
 		group=${group:-unsorted}
 		SV_GROUP_CMDS[${group}]="$cmd,${SV_GROUP_CMDS[$group]}"
+		_sv_cmds[$cmd]=1
+	done
+	group="global"
+	for i in "help" "list"; do
+		if [ -z "${_sv_cmds[$i]}" ]; then
+			SV_GROUP_CMDS[${group}]="$i,${SV_GROUP_CMDS[$group]}"
+		fi
 	done
 }
 
