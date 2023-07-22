@@ -1,0 +1,18 @@
+COMMAND=61.pre_post
+SUBVERB=pre
+ARGUMENTS=
+
+define DESCRIPTION
+call subverb with active preparation plugin
+endef
+
+define OUTPUT
+always: pre
+plugin: always: pre
+pre: pre
+pre
+always: post
+plugin: always: post
+endef
+
+include common.mk

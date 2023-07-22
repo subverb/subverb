@@ -1,0 +1,16 @@
+COMMAND=64.pre_post
+SUBVERB=nonexistent
+ARGUMENTS=
+
+define DESCRIPTION
+call nonexistent subverb with active preparation and fixup plugin
+endef
+
+define OUTPUT
+always: pre
+plugin: always: pre
+non-existent: pre
+non-existent: post
+endef
+
+include common.mk

@@ -1,0 +1,20 @@
+COMMAND=63.pre_post
+SUBVERB=both
+ARGUMENTS=
+
+define DESCRIPTION
+call subverb with active preparation and fixup plugin
+endef
+
+define OUTPUT
+always: pre
+plugin: always: pre
+both: pre
+both
+both: plugin
+both: post
+always: post
+plugin: always: post
+endef
+
+include common.mk

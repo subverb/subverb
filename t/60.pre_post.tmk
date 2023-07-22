@@ -1,0 +1,17 @@
+COMMAND=60.pre_post
+SUBVERB=none
+ARGUMENTS=
+
+define DESCRIPTION
+call subverb without active plugin
+endef
+
+define OUTPUT
+always: pre
+plugin: always: pre
+none
+always: post
+plugin: always: post
+endef
+
+include common.mk

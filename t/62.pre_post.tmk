@@ -1,0 +1,18 @@
+COMMAND=62.pre_post
+SUBVERB=post
+ARGUMENTS=
+
+define DESCRIPTION
+call subverb with active fixup plugin
+endef
+
+define OUTPUT
+always: pre
+plugin: always: pre
+post
+post: post
+always: post
+plugin: always: post
+endef
+
+include common.mk

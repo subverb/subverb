@@ -84,35 +84,71 @@ _sv_call_altshebang() {
 	fi
 }
 
+# call each file in the directory (given as first parameter)
+# Must either be readible and have .sh-extension
+# or most be executable otherwise it might be ignored
+# If the directory doesn't exists, everythings fine as well
+sv_calldir() {
+	local dir=$1
+	local filename
+	if [ -z "${dir}" ]; then
+		return 1
+	fi
+	if [ ! -d  "${dir}" ]; then
+		return 0
+	fi
+	local ret=0
+	for filename in "${dir}"/*; do
+		_sv_call "${filename}" || ret=1
+	done
+	return $ret
+}
+
+_sv_call() {
+	local file=$1
+	case "$file" in
+		*.sh)
+			if [ -f "$file" ]; then
+				set -- "${EXARGV[@]}"
+				. "$file"
+				export RVAL=$?
+				return 0
+			fi
+			;;
+		*)
+			if [ -x "$i" ]; then
+				_sv_call_altshebang "$i" "${EXARGV[@]}"
+				export RVAL=$?
+				return 0
+			fi
+			;;
+	esac
+	return 1
+}
 # call an external application
 # cmdline-arguments are passed via EXARGV
 # applications return-value is given via RVAL
 # return true, when the command was found
 sv_call() {
 	export RVAL="-1"
+	local ret=1
 	for i in "$@"; do
+		sv_calldir "${i}-pre.d"
 		for ext in .sh ""; do
-			file="${i}${ext}"
-			case "$file" in
-				*.sh)
-					if [ -f "$file" ]; then
-						set -- "${EXARGV[@]}"
-						. "$file"
-						export RVAL=$?
-						return 0
-					fi
-					;;
-				*)
-					if [ -x "$i" ]; then
-						_sv_call_altshebang "$i" "${EXARGV[@]}"
-						export RVAL=$?
-						return 0
-					fi
-					;;
-			esac
+			if _sv_call "${i}${ext}"; then
+				ret=0
+				break
+			fi
 		done
+		if [ $ret -eq 0 ]; then
+			sv_calldir "${i}.d"
+		fi
+		sv_calldir "${i}-post.d"
+		if [ $ret -eq 0 ]; then
+			break
+		fi
 	done
-	return 1
+	return $ret
 }
 
 sv_group_cmds() {
