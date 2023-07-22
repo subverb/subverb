@@ -1,0 +1,18 @@
+COMMAND=52.sv_bash_complete
+SUBVERB=bash-completion
+ARGUMENTS=--
+
+export COMP_CWORD=1
+export COMP_WORDS=$(COMMAND) --
+
+define DESCRIPTION
+show global long options via bash-completion
+endef
+
+define OUTPUT
+--bar
+--bla
+--foo
+endef
+
+include common.mk

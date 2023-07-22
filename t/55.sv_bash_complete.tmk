@@ -1,0 +1,25 @@
+COMMAND=55.sv_bash_complete
+SUBVERB=bash-completion
+ARGUMENTS="" c
+
+define INPUT
+2
+$(COMMAND)
+c
+endef
+
+define DESCRIPTION
+show subverb options via bash-completion
+endef
+
+define OUTPUT
+-a
+--bar
+-b
+--bla
+--foo
+-f
+--foobar
+endef
+
+include common.mk

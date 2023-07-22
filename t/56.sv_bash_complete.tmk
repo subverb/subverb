@@ -1,0 +1,16 @@
+COMMAND=56.sv_bash_complete
+SUBVERB=bash-completion
+ARGUMENTS=--bla 
+
+export COMP_CWORD=1
+export COMP_WORDS=$(COMMAND) --bla sv b
+
+define DESCRIPTION
+show bash-completion on earlier cursor
+endef
+
+define OUTPUT
+--bla
+endef
+
+include common.mk

@@ -1,0 +1,27 @@
+COMMAND=50.sv_bash_complete
+SUBVERB=bash-completion
+ARGUMENTS=
+
+export COMP_CWORD=1
+
+define DESCRIPTION
+show subverbs via bash-completion
+endef
+
+define OUTPUT
+-a
+--bar
+-b
+--bla
+--foo
+-f
+a
+b
+bar
+c
+foo
+help
+list
+endef
+
+include common.mk

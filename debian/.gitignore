@@ -3,3 +3,4 @@
 /subverb*.substvars
 /subverb*/
 /tmp/
+/.debhelper

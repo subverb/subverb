@@ -226,6 +226,69 @@ _sv_print_cols() {
 	fi
 }
 
+_sv_bo_list() {
+	echo "${SV_COMP_OPTIONS}" | sed -e 's/^://'
+}
+
+_sv_b_list() {
+	for grp in "${!SV_GROUP_CMDS[@]}"; do
+		echo "${SV_GROUP_CMDS[$grp]}"
+	done | sed -e 's/\s*,\s*/\n/g' | grep -v "^$" | sort
+}
+_sv_b_check() {
+	_sv_b_list | grep -q "^$1$"
+}
+
+_sv_bash_completion() {
+	SV_COMP_CUR=$1
+	SV_COMP_LAST=$2
+
+	set -- "${COMP_WORDS[@]}"
+	shift
+	sv_parse_options "$@"
+	set -- "${SV_UNPARSED[@]}"
+	sv_group_cmds
+	
+	SV_CMD=${SV_UNPARSED[0]}
+	SV_CMD_VALID=""
+	SV_VERB_ARGS=""
+	SV_COMP_OPTIONS=""
+
+	SVH_FORMAT="bashopt"
+	if [ -n "${SV_CMD}" ] && _sv_b_check ${SV_CMD}; then
+		if [ "${SV_CMD}" != "${SV_COMP_CUR}" ]; then
+			SV_CMD_VALID="true"
+		fi
+		_sv_comp_cmd_cword=$[${#COMP_WORDS[@]} - ${#SV_UNPARSED[@]} -1]
+		if [ -z "${COMP_CWORD}" ]; then
+			COMP_CWORD=0
+		fi
+		if [ ${COMP_CWORD} -ge ${_sv_comp_cmd_cword} ]; then
+			SV_VERB_ARGS="true"
+			SV_COMP_OPTIONS=$(SVH_LONG=0 sv_help_file "${SV_CMD}")
+		fi
+	fi
+	if [ -z "${SV_VERB_ARGS}" ]; then
+		SV_COMP_OPTIONS=$(sv_option_help $SVBASE "")
+	fi
+
+	case "${SV_COMP_CUR}" in
+		-*)
+			compgen -W "$(_sv_bo_list)" -- "${SV_COMP_CUR}"
+			;;
+		*)
+			if [ "${SV_COMP_LAST:0:1}" == "-" ] && echo "${SV_COMP_OPTIONS}" | grep -q "^${SV_COMP_LAST}$"; then
+				compgen -o default -- "${SV_COMP_CUR}"
+			else
+				compgen -W "$(_sv_bo_list)" -- "${SV_COMP_CUR}"
+				if [ -z "${SV_CMD_VALID}" ]; then
+					compgen -W "$(_sv_b_list)" -- "${SV_COMP_CUR}"
+				fi
+			fi
+			;;
+	esac
+}
+
 _sv_help_printcmds() {
 	sv_group_cmds
 	if [ "${#SV_GROUP_CMDS[@]}" -le 0 ]; then
@@ -328,10 +391,13 @@ sv_option_help() {
 
 	for var in "${varsort[@]}"; do
 		declare vardesc="${help_option[$var]}"
+		declare varreal="${help_option[$var]}"
 		if [ "${var:0:1}" == ":" ]; then
 			var=${var:1}
+			_sv_bo_prefix=":"
 		else
 			vardesc="${vardesc} <param>"
+			_sv_bo_prefix=""
 		fi
 		case "$SVH_FORMAT" in 
 			plain) echo -e "\t${vardesc}\t${SV_OPTION_HELP[$var]}";;
@@ -340,6 +406,9 @@ sv_option_help() {
 				echo "\\fB${vardesc}\\fP"
 				echo "${SV_OPTION_HELP[$var]}"
 				echo
+				;;
+			bashopt)
+				echo "${varreal}" | sed -e 's/, /\n/g' | sed -e "s/^/${_sv_bo_prefix}/"
 				;;
 		esac
 	done
@@ -360,6 +429,7 @@ sv_help_list() {
 sv_help_file() {
 	subverb="$1"
 	file="${2:-${SVEXEC}/$1}"
+	if [ -f "${file}.sh" ]; then file="${file}.sh"; fi
 	run_option_help=0
 	parse_sv_help=1
 	help_handling="$(sed -ne '/SV_HANDLE_HELP[:=]\s*/{s/.*SV_HANDLE_HELP[:=]\s*"\?\s*\(\w\+\)\s*"\?.*/\1/;p;q}' "$file")"
@@ -617,6 +687,9 @@ sv_parse_options() {
 	while [ $# -gt 0 ]; do
 		_OPTDESC=
 		case "$1" in
+			--)
+				break
+			;;
 			--*)
 				_OPTDESC="${SV_OPTION[${1##--}]}"
 				if [ -z "$_OPTDESC" -a "$SV_AUTO_OPTIONS" == 1 ]; then
@@ -706,6 +779,19 @@ sv_parse_options "$@"
 
 if sv_call "${SVEXEC}-configured" && [ $RVAL -ne 0 ]; then
 	echo "$0: command configuration invalid"
+	exit $RVAL
+fi
+
+if [ "${SV_UNPARSED[0]}" == "bash-completion" ]; then
+	if [ -z "${COMP_CWORD}" ]; then
+		if [ -t 0 ]; then
+			echo "bash-completion not supported for interactive environments" >&2
+			exit 1
+		fi
+		read COMP_CWORD
+		readarray -t COMP_WORDS
+	fi
+	_sv_bash_completion "${SV_UNPARSED[@]:1}"
 	exit $RVAL
 fi
 

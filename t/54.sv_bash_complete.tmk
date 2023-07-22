@@ -1,0 +1,17 @@
+COMMAND=54.sv_bash_complete
+SUBVERB=bash-completion
+ARGUMENTS=b sv
+
+export COMP_CWORD=3
+export COMP_WORDS=$(COMMAND) --bla sv b
+
+define DESCRIPTION
+show matching subverb via bash-completion after global option with parameter
+endef
+
+define OUTPUT
+b
+bar
+endef
+
+include common.mk
