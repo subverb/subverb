@@ -19,9 +19,12 @@ a
 b
 bar
 c
+flying
 foo
 help
 list
+saucer
+simple
 endef
 
 include common.mk

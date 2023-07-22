@@ -123,7 +123,7 @@ sv_group_cmds() {
 	declare -A _sv_cmds
 	for file in ${SVEXEC}/*; do
 		cmd=$(basename "$file" .sh)
-		group=$(sed -ne '/^[# ]*SV_GROUP[:= ]\s*/{s/.*[A-Z]*[:= ]\s*\([-_.a-zA-Z]*\).*/\1/;p;q}' $file)
+		group=$(sed -ne '/^[# ]*SV_GROUP\s*[:= ]\s*/{s/.*SV_GROUP\s*[:= ]\s*//;s/\s*$//;p;q}' $file)
 		group=${group:-unsorted}
 		SV_GROUP_CMDS[${group}]="$cmd,${SV_GROUP_CMDS[$group]}"
 		_sv_cmds[$cmd]=1

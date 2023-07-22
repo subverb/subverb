@@ -8,6 +8,9 @@ endef
 define OUTPUT
 sv_help - short help text
 
+Available complicate group name subcommands:
+simple
+
 Available global subcommands:
 help	list
 
@@ -16,6 +19,9 @@ a	b	c
 
 Available unsorted subcommands:
 bar	foo
+
+Available area51 subcommands:
+flying	saucer
 
 Supported global options:
 	-a <param>	help for short-option A
